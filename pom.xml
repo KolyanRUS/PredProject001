@@ -26,6 +26,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <com.h2database.h2.version>1.4.187</com.h2database.h2.version>
+        <mysql.mysql-connector-java.version>5.1.35</mysql.mysql-connector-java.version>
         <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
     </properties>
 
@@ -54,6 +55,11 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${org.hibernate.hibernate-core.version}</version>
         </dependency>
         <!-- Servlet API 4.0 for tomcat 9 -->
         <!--<dependency>

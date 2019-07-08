@@ -8,20 +8,29 @@ import java.util.List;
 
 /**
  * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
+ * <p>
+ * Пример кода для курса на https://stepic.org/
+ * <p>
+ * Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
 interface UserDAO {
-	void createTeble() throws SQLException;
-	void dropTable() throws SQLException;
-	void cleanTable() throws SQLException;
-	void deleteId(int id) throws SQLException;
-	void updateId(int id, String name, String login, String password) throws SQLException;
-	void insertUser(String name, String password, String login) throws SQLException;
-	long getUserId(String login) throws SQLException;
-	List<User> getListUsers() throws SQLException;
-	User getUser(String login) throws SQLException;
-	User get(long id) throws SQLException;
+    void createTeble() throws SQLException;
+
+    void dropTable() throws SQLException;
+
+    void cleanTable() throws SQLException;
+
+    void deleteId(int id) throws SQLException;
+
+    void updateId(int id, String name, String login, String password) throws SQLException;
+
+    void insertUser(String name, String password, String login) throws SQLException;
+
+    long getUserId(String login) throws SQLException;
+
+    List<User> getListUsers() throws SQLException;
+
+    User getUser(String login) throws SQLException;
+
+    User get(long id) throws SQLException;
 }

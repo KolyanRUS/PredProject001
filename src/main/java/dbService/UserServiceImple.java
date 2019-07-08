@@ -52,9 +52,6 @@ public class UserServiceImple implements UserService {
     public long getUserId(String login) throws SQLException {
         return dao.getUserId(login);
     }
-    public String tree() {
-        return dao.tree();
-    }
     public Executor getExecutor() {
         return dao.getExecutor();
     }

@@ -41,9 +41,9 @@
                 <td><c:out value="${user.getLogin()}" /></td>
                 <td><c:out value="${user.getPassword()}" /></td>
                 <td>
-                    <form action="start" method="post">
+                    <form <%--name="id" value="${user.getId()}"--%>action="deleteuser" method="post">
                         <c:set var="userid" scope="application" value="${user.getId()}"/>
-                        <input type="submit" name="ButtonName" value="Delete_User#${user.getId()}"/>
+                        <input type="submit" name="ButtonName" value="Delete User ${user.getId()}"/>
                     </form>
                 </td>
                 <td>
@@ -52,7 +52,7 @@
                         <c:set var="user__name" scope="application" value="${user.getName()}"/>
                         <c:set var="user__login" scope="application" value="${user.getLogin()}"/>
                         <c:set var="user__password" scope="application" value="${user.getPassword()}"/>
-                        <input type="submit" name="ButtonName" value="Update_User"/>
+                        <input type="submit" name="ButtonName" value="Update User"/>
                     </form>
                 </td>
             </tr>
