@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileWriter;
 import java.io.IOException;
 
 @WebServlet(name="CreateUser",urlPatterns = "/createuser")
@@ -18,6 +19,10 @@ public class CreateUser extends HttpServlet{
         try {
             usi.insertUser(name,password,login);
         } catch (Throwable throwable) {
+            try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
+                writer.write("\r\n"+"throwable [usi.insertUser(name,password,login)]: "+throwable.toString()+"\r\n");
+                writer.flush();
+            }
             //ignore
         }
         resp.sendRedirect("/start");

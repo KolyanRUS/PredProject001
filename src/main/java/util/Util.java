@@ -46,7 +46,7 @@ public class Util {
             return DriverManager.getConnection(url, username, password);
         } catch (Throwable t) {
             try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
-                writer.write("getH2Connection() выполнить успешно не удалось, ошибка "+t.toString()+"\r\n");
+                writer.write("getMySQLConnection() выполнить успешно не удалось, ошибка "+t.toString()+"\r\n");
                 writer.flush();
             }
             catch (IOException ex) {
@@ -62,8 +62,8 @@ public class Util {
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost/Users");
-        configuration.setProperty("hibernate.connection.username", "tully");
-        configuration.setProperty("hibernate.connection.password", "tully");
+        configuration.setProperty("hibernate.connection.username", "Kolyan1998");
+        configuration.setProperty("hibernate.connection.password", "admin");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
         configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
         return configuration;

@@ -13,7 +13,7 @@ import java.util.List;
  *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
 interface UserService {
-	void createTeble() throws SQLException;
+	void createTable() throws SQLException;
 	void dropTable() throws SQLException;
 	void cleanTable() throws SQLException;
 	void deleteId(int id) throws SQLException;

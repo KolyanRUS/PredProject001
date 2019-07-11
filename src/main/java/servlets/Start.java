@@ -40,11 +40,20 @@ public class Start extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> userList = new ArrayList<User>();
+        /*try {
+            UserServiceImple usi = UserServiceImple.getInstance();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+            try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
+                writer.write("\r\n"+"_throwable: "+throwable.toString()+"\r\n");
+                writer.flush();
+            }
+        }*/
         try {
             userList = usi.getListUsers();
         } catch (Throwable throwable) {
             try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
-                writer.write("\r\n"+"throwable: "+throwable.toString()+"\r\n");
+                writer.write("\r\n"+"throwable [usi.getListUsers()]: "+throwable.toString()+"\r\n");
                 writer.flush();
             }
             //ignore
