@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Kolyan1998
-  Date: 16.06.2019
-  Time: 20:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="dao.UsersDAOImple" %>
 <%@ page import="model.User" %>
 <%@ page import="executor.Executor" %>
@@ -22,9 +15,9 @@
 </div>
 <div>
     <form action="updateuser" method="post">
-        <p><small>Id</small>
+        <%----%><p><small>Id</small>
             <input type="text" name="id" value="${user__id}" size="5" />
-        </p>
+        </p><%----%>
         <p><small>Name</small>
             <input type="text" name="name" value="${user__name}" size="5" />
         </p>

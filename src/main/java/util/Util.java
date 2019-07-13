@@ -45,13 +45,7 @@ public class Util {
                     newInstance();//Инициализация драйвера jdbc для работы с MySQL
             return DriverManager.getConnection(url, username, password);
         } catch (Throwable t) {
-            try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
-                writer.write("getMySQLConnection() выполнить успешно не удалось, ошибка "+t.toString()+"\r\n");
-                writer.flush();
-            }
-            catch (IOException ex) {
-                //ignore
-            }
+            System.out.println("getMySQLConnection() выполнить успешно не удалось, ошибка "+t.toString());
         }
         return null;
     }

@@ -23,52 +23,43 @@ public class UsersDAOImple implements UserDAO {
     public UsersDAOImple() {
         this.sessionFactory = createSessionFactory(Util.getInstance().getMySqlConfiguration());
         this.executor = new Executor(Util.getInstance().getMySQLConnection());
-        /*try {
-            createTable();
-            try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
-                writer.write("\r\n"+"createTable() UDALOS"+"\r\n");
-                writer.flush();
-            } catch (Throwable t) {}
-        } catch (Throwable throwable) {
-            try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
-                writer.write("\r\n"+"throwable [createTable()]: "+throwable.toString()+"\r\n");
-                writer.flush();
-            } catch (Throwable t) {}
-            //ignore
-        }*/
     }
     public void createTable() throws SQLException {
-        /*executor.execUpdate("CREATE TABLE IF NOT EXISTS users (Id BIGINT AUTO_INCREMENT, user" +
-                "_name VARCHAR(256), user_password VARCHAR(256), user_login VARCHAR(256), " +
-                "PRIMARY KEY (Id))");*/
         executor.execUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT, " +
-                "name VARCHAR(256), password VARCHAR(256), login VARCHAR(256), " +
+                "login VARCHAR(255), name VARCHAR(255), password VARCHAR(255), " +
                 "PRIMARY KEY (id))");
     }
     public void dropTable() throws SQLException {
-        executor.execUpdate("DROP TABLE users");
+        executor.execUpdate("DROP TABLE IF EXISTS users");
     }
     public void cleanTable() throws SQLException {
-        executor.execUpdate("DROP TABLE IF EXISTS users");
-        createTable();
+        session = sessionFactory.openSession();
+        List<User> users_list = getListUsers();//session.createQuery("FROM "+User.class.getSimpleName()).list();
+        for (User user: users_list
+             ) {
+            deleteId((int)user.getId());
+        }
+        session.close();
     }
     public void deleteId(int id) throws SQLException {
-        /*
-        Query query =  session.createQuery("delete ContactEntity where firstName = :param");
-        query.setParameter("param", "Leonid");
-        int result = query.executeUpdate();
-         */
         session = sessionFactory.openSession();
-        session.createQuery("DELETE FROM users WHERE id = "+id);
+        session.createQuery("DELETE User WHERE id = :id").setLong("id", id).executeUpdate();
         session.close();
-        //executor.execUpdate("DELETE FROM users WHERE Id = '"+id+"'");
     }
     public void updateId(int id, String name, String login, String password) throws SQLException {
         session = sessionFactory.openSession();
-        session.createQuery("UPDATE users SET name = "+name+", login = "
-                +login+", password = "+password+" WHERE id = "+Integer.toString(id));
+        String hql = "update User "
+                + "SET login  = :login"
+                +   ", name = :name"
+                +   ", password = :password"
+                +  " where id = :idParam";
+        Query query = session.createQuery(hql);
+        query.setParameter("idParam"  , (long)id);
+        query.setParameter("name"     , name);
+        query.setParameter("login" , login);
+        query.setParameter("password", password);
+        query.executeUpdate();
         session.close();
-        //executor.execUpdate("UPDATE users SET user_name = '"+name+"', user_login = '"+login+"', user_password = '"+password+"' WHERE Id = '"+Integer.toString(id)+"'");
     }
     public void insertUser(String name, String password, String login) throws SQLException {
         try {
@@ -78,7 +69,7 @@ public class UsersDAOImple implements UserDAO {
             transaction.commit();
             session.close();
         } catch (Throwable t) {
-            //ignore
+            System.out.println("ERROR::insertUser()::"+t.toString());//ignore
         }
     }
     public long getUserId(String login) throws SQLException {
@@ -94,7 +85,7 @@ public class UsersDAOImple implements UserDAO {
             session.close();
             return users;
         } catch (Throwable t) {
-            //ignore
+            System.out.println("ERROR::getListUsers()::"+t.toString());
         }
         return null;
     }
@@ -106,7 +97,7 @@ public class UsersDAOImple implements UserDAO {
             User us = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
             return us;
         } catch (Throwable t) {
-            //ignore
+            System.out.println("ERROR::getUser()::"+t.toString());
         }
         return null;
     }
@@ -116,7 +107,7 @@ public class UsersDAOImple implements UserDAO {
             User user = (User) session.load(User.class, id);
             session.close();
         } catch (Throwable t) {
-            //ignore
+            System.out.println("ERROR::get()::"+t.toString());
         }
         return null;
     }

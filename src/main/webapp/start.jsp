@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Kolyan1998
-  Date: 16.06.2019
-  Time: 20:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="dao.UsersDAOImple" %>
 <%@ page import="model.User" %>
 <%@ page import="executor.Executor" %>
@@ -17,9 +10,6 @@
     <title>Start</title>
 </head>
 <body>
-<%--<<div>
-    <a href="/start">Start_Menu</a>
-</div>--%>
 <div>
     <form action="start" method="post">
         <input type="submit" name="ButtonName" value="Delete_All_Users"/>
@@ -30,20 +20,19 @@
             <th>User_name</th>
             <th>User_login</th>
             <th>User_password</th>
-            <th></th>
-            <th></th>
+            <th>Button for removing</th>
+            <th>Button for updating</th>
         </tr>
         <c:forEach var="user" items="${users}">
-            <%--<p>${user}</p>--%>
             <tr>
                 <td><c:out value="${user.getId()}" /></td>
                 <td><c:out value="${user.getName()}" /></td>
                 <td><c:out value="${user.getLogin()}" /></td>
                 <td><c:out value="${user.getPassword()}" /></td>
                 <td>
-                    <form <%--name="id" value="${user.getId()}"--%>action="deleteuser" method="post">
+                    <form action="deleteuser" method="post">
                         <c:set var="userid" scope="application" value="${user.getId()}"/>
-                        <input type="submit" name="ButtonName" value="Delete User ${user.getId()}"/>
+                        <input type="submit" name="ButtonName" value="${user.getId()}"/>
                     </form>
                 </td>
                 <td>
@@ -58,40 +47,7 @@
             </tr>
         </c:forEach>
     </table>
-    <form action="createuser" method="get">
-        <input type="submit" name="ButtonName" value="Create_User"/>
-    </form>
+    <a href = "/createuser">Create_User</a>
 </div>
 </body>
 </html>
-<%--
-  Created by IntelliJ IDEA.
-  User: Kolyan1998
-  Date: 16.06.2019
-  Time: 20:40
-  To change this template use File | Settings | File Templates.
---%>
-<%--<%@ page import="dao.UsersDAOImple" %>
-<%@ page import="model.User" %>
-<%@ page import="executor.Executor" %>
-<%@ page import="java.lang.String"%>
-<%@ page import="servlets.*"%>
-
-<%@ page import="servlets.CreateUser"%>
-
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-    <title>Start</title>
-</head>
-<body>
-<p><a href="/createuser">Create_User</a></p>
-<p><a href="/deleteuser">Delete_User</a></p>
-<p><a href="/readusers">Read_Users</a></p>
-<p><a href="/updateuser">Update_User</a></p>
-</body>
-</html>--%>

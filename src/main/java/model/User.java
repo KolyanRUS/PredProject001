@@ -32,6 +32,10 @@ public class User {
         this.login = login;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
+    public User() {
+    }
+
     public User(long id, String name, String password, String login) {
         this.id = id;
         this.name = name;

@@ -19,14 +19,9 @@ public class CreateUser extends HttpServlet{
         try {
             usi.insertUser(name,password,login);
         } catch (Throwable throwable) {
-            try(FileWriter writer = new FileWriter("D:\\file.txt",true)) {
-                writer.write("\r\n"+"throwable [usi.insertUser(name,password,login)]: "+throwable.toString()+"\r\n");
-                writer.flush();
-            }
-            //ignore
+            System.out.println("throwable [usi.insertUser(name,password,login)]: "+throwable.toString());
         }
         resp.sendRedirect("/start");
-        //getServletContext().getRequestDispatcher("/start").forward(req, resp);
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

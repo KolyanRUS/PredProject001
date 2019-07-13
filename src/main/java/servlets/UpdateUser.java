@@ -19,15 +19,14 @@ public class UpdateUser extends HttpServlet{
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch(Throwable throwable) {
-            //ignore
+            System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"id\"))::"+throwable.toString());
         }
         try {
             usi.updateId(id,name,login,password);
         } catch (Throwable throwable) {
-            //ignore
+            System.out.println("ERROR::usi.updateId(id,name,login,password)::"+throwable.toString());
         }
         resp.sendRedirect("/start");
-        //getServletContext().getRequestDispatcher("/start.jsp").forward(req, resp);
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
