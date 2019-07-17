@@ -15,12 +15,11 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import util.Util;
-
-public class UsersDAOImple implements UserDAO {
+public class UserDaoHibernateImpl implements UserDAO {
     private final SessionFactory sessionFactory;
     private Session session;
     private Executor executor;
-    public UsersDAOImple() {
+    public UserDaoHibernateImpl() {
         this.sessionFactory = createSessionFactory(Util.getInstance().getMySqlConfiguration());
         this.executor = new Executor(Util.getInstance().getMySQLConnection());
     }
@@ -36,7 +35,7 @@ public class UsersDAOImple implements UserDAO {
         session = sessionFactory.openSession();
         List<User> users_list = getListUsers();//session.createQuery("FROM "+User.class.getSimpleName()).list();
         for (User user: users_list
-             ) {
+        ) {
             deleteId((int)user.getId());
         }
         session.close();

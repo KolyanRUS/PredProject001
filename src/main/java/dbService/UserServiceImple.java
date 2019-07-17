@@ -1,8 +1,13 @@
 package dbService;
 
-import dao.UsersDAOImple;
+import dao.*;
+import factory.UserDAOFactoryImpl;
+import factory.UserDaoFactory;
 import model.User;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,9 +16,13 @@ public class UserServiceImple implements UserService {
     public static UserServiceImple getInstance() {
         return usi;
     }
-    private UsersDAOImple dao;
-    public UserServiceImple(){
-        this.dao = new UsersDAOImple();
+    private UserDAO dao;
+    public UserServiceImple() /*throws java.io.FileNotFoundException, java.io.IOException*/ {
+        try {
+            this.dao = new UserDAOFactoryImpl().getUserDAO();
+        } catch (Throwable throwable) {
+            System.out.println("ERROR::UserServiceImple::"+throwable.toString());
+        }
     }
     public void createTable() throws SQLException {
         /*оставил на будущее (вдруг снова потребуется узнавать, откуда был вызван метод)

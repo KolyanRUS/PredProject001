@@ -1,4 +1,4 @@
-<%@ page import="dao.UsersDAOImple" %>
+<%@ page import="dao.UserDaoJDBCimpl" %>
 <%@ page import="model.User" %>
 <%@ page import="executor.Executor" %>
 <%@ page import="java.lang.String"%>

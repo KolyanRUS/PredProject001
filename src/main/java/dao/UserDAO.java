@@ -13,7 +13,7 @@ import java.util.List;
  * <p>
  * Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
-interface UserDAO {
+public interface UserDAO {
     void createTable() throws SQLException;
 
     void dropTable() throws SQLException;

@@ -5,7 +5,7 @@
   Time: 20:40
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="dao.UsersDAOImple" %>
+<%@ page import="dao.UserDaoJDBCimpl" %>
 <%@ page import="model.User" %>
 <%@ page import="executor.Executor" %>
 <%@ page import="java.lang.String"%>

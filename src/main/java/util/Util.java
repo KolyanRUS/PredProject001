@@ -3,9 +3,7 @@ package util;
 import model.User;
 import org.hibernate.cfg.Configuration;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -34,15 +32,22 @@ public class Util {
     public Connection getMySQLConnection() {
         try {
             Properties props = new Properties();
-            try(InputStream in = Files.newInputStream(Paths.get("C:\\Users\\Kolyan1998\\IdeaProjects\\PredProject001\\src\\main\\resources\\database.properties"))){
+            try(BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("database.properties")))) {
+                String str;
+                //getClass().getClassLoader().getResourceAsStream("database.properties");
+                System.out.println("---===---===---===");//getClass().getResource("/").getPath()+"\\database.properties"
+                while((str = br.readLine())!=null) {//getResourceAssStream
+                    System.out.println(str);//
+                }
+                System.out.println("---===---===---===");
+            }
+            try(InputStream in = getClass().getClassLoader().getResourceAsStream("database.properties")){
                 props.load(in);
             }
             String url = props.getProperty("url");
             String username = props.getProperty("username");
             String password = props.getProperty("password");
-            Class.forName("com.mysql.jdbc.Driver").
-                    getDeclaredConstructor().
-                    newInstance();//Инициализация драйвера jdbc для работы с MySQL
+            Class.forName("com.mysql.jdbc.Driver");//Инициализация драйвера jdbc для работы с MySQL
             return DriverManager.getConnection(url, username, password);
         } catch (Throwable t) {
             System.out.println("getMySQLConnection() выполнить успешно не удалось, ошибка "+t.toString());
@@ -52,7 +57,6 @@ public class Util {
     public Configuration getMySqlConfiguration() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(User.class);
-
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost/Users");
