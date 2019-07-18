@@ -13,15 +13,20 @@ public class CreateUser extends HttpServlet{
     UserServiceImple usi = UserServiceImple.getInstance();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String role = req.getParameter("role");
         String name = req.getParameter("name");
         String password = req.getParameter("password");
         String login = req.getParameter("login");
         try {
-            usi.insertUser(name,password,login);
+            usi.insertUser(role,name,password,login);
         } catch (Throwable throwable) {
             System.out.println("throwable [usi.insertUser(name,password,login)]: "+throwable.toString());
         }
-        resp.sendRedirect("/start");
+        if(Start.rights==true) {
+            resp.sendRedirect("/admin");
+        } else {
+            resp.sendRedirect("/user");
+        }
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

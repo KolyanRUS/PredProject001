@@ -25,7 +25,7 @@ public class UserDaoHibernateImpl implements UserDAO {
     }
     public void createTable() throws SQLException {
         executor.execUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT, " +
-                "login VARCHAR(255), name VARCHAR(255), password VARCHAR(255), " +
+                "role VARCHAR(255), login VARCHAR(255), name VARCHAR(255), password VARCHAR(255), " +
                 "PRIMARY KEY (id))");
     }
     public void dropTable() throws SQLException {
@@ -38,21 +38,22 @@ public class UserDaoHibernateImpl implements UserDAO {
         ) {
             deleteId((int)user.getId());
         }
-        session.close();
+        //session.close();
     }
     public void deleteId(int id) throws SQLException {
         session = sessionFactory.openSession();
         session.createQuery("DELETE User WHERE id = :id").setLong("id", id).executeUpdate();
         session.close();
     }
-    public void updateId(int id, String name, String login, String password) throws SQLException {
+    public void updateId(int id, String role, String name, String login, String password) throws SQLException {
         session = sessionFactory.openSession();
         String hql = "update User "
-                + "SET login  = :login"
+                + "SET role = :role, login  = :login"
                 +   ", name = :name"
                 +   ", password = :password"
                 +  " where id = :idParam";
         Query query = session.createQuery(hql);
+        query.setParameter("role",role);
         query.setParameter("idParam"  , (long)id);
         query.setParameter("name"     , name);
         query.setParameter("login" , login);
@@ -60,11 +61,11 @@ public class UserDaoHibernateImpl implements UserDAO {
         query.executeUpdate();
         session.close();
     }
-    public void insertUser(String name, String password, String login) throws SQLException {
+    public void insertUser(String role, String name, String password, String login) throws SQLException {
         try {
             session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            long id = (Long) session.save(new User(-1, name, password, login));
+            long id = (Long) session.save(new User(-1, role, name, password, login));
             transaction.commit();
             session.close();
         } catch (Throwable t) {
@@ -92,8 +93,8 @@ public class UserDaoHibernateImpl implements UserDAO {
         try {
             session = sessionFactory.openSession();
             Criteria criteria = session.createCriteria(User.class);
-            session.close();
             User us = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
+            session.close();
             return us;
         } catch (Throwable t) {
             System.out.println("ERROR::getUser()::"+t.toString());

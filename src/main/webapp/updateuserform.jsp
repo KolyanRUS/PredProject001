@@ -11,11 +11,17 @@
 </head>
 <body>
 <div>
-    <a href="/start">Start_Menu</a>
+    <a href="/admin">Admin_Menu</a>
+    <a href="/user">User_Menu</a>
 </div>
 <div>
     <form action="updateuser" method="post">
-        <%----%><p><small>Id</small>
+        <p><small>Role selection</small>
+            <select name="role">
+                <option selected="selected" value="user">user</option>
+                <option value="admin">admin</option>
+            </select></p>
+        <p><small>Id</small>
             <input type="text" name="id" value="${user__id}" size="5" />
         </p><%----%>
         <p><small>Name</small>

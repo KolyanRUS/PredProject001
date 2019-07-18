@@ -12,42 +12,14 @@
 <body>
 <div>
     <form action="start" method="post">
-        <input type="submit" name="ButtonName" value="Delete_All_Users"/>
+        <p><small>Login</small>
+            <input type="text" name="login" value="" size="5" />
+        </p>
+        <p><small>Password</small>
+            <input type="text" name="password" value="" size="5" />
+        </p>
+        <input type="submit" name="ButtonName" value="log in"/>
     </form>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>User_name</th>
-            <th>User_login</th>
-            <th>User_password</th>
-            <th>Button for removing</th>
-            <th>Button for updating</th>
-        </tr>
-        <c:forEach var="user" items="${users}">
-            <tr>
-                <td><c:out value="${user.getId()}" /></td>
-                <td><c:out value="${user.getName()}" /></td>
-                <td><c:out value="${user.getLogin()}" /></td>
-                <td><c:out value="${user.getPassword()}" /></td>
-                <td>
-                    <form action="deleteuser" method="post">
-                        <c:set var="userid" scope="application" value="${user.getId()}"/>
-                        <input type="submit" name="ButtonName" value="${user.getId()}"/>
-                    </form>
-                </td>
-                <td>
-                    <form action="updateuser" method="get">
-                        <c:set var="user__id" scope="application" value="${user.getId()}"/>
-                        <c:set var="user__name" scope="application" value="${user.getName()}"/>
-                        <c:set var="user__login" scope="application" value="${user.getLogin()}"/>
-                        <c:set var="user__password" scope="application" value="${user.getPassword()}"/>
-                        <input type="submit" name="ButtonName" value="Update User"/>
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-    <a href = "/createuser">Create_User</a>
 </div>
 </body>
 </html>

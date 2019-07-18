@@ -27,6 +27,7 @@
     <table>
         <tr>
             <th>Id</th>
+            <th>Role</th>
             <th>User_name</th>
             <th>User_login</th>
             <th>User_password</th>
@@ -37,6 +38,7 @@
             <%--<p>${user}</p>--%>
             <tr>
                 <td><c:out value="${user.getId()}" /></td>
+                <td><c:out value="${user.getRole()}" /></td>
                 <td><c:out value="${user.getName()}" /></td>
                 <td><c:out value="${user.getLogin()}" /></td>
                 <td><c:out value="${user.getPassword()}" /></td>
@@ -49,6 +51,7 @@
                 <td>
                     <form action="updateuser" method="get">
                         <c:set var="user__id" scope="application" value="${user.getId()}"/>
+                        <c:set var="user__role" scope="application" value="${user.getId()}"/>
                         <c:set var="user__name" scope="application" value="${user.getName()}"/>
                         <c:set var="user__login" scope="application" value="${user.getLogin()}"/>
                         <c:set var="user__password" scope="application" value="${user.getPassword()}"/>

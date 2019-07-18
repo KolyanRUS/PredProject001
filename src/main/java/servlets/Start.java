@@ -17,34 +17,40 @@ import java.util.List;
 
 @WebServlet(name="Start",urlPatterns={"/start"})
 public class Start extends HttpServlet{
+    public static boolean rights = false;//true если режим админа
     UserServiceImple usi = UserServiceImple.getInstance();
+    static {
+        try {
+            UserServiceImple.getInstance().insertUser("admin","admin", "admin", "admin");
+            UserServiceImple.getInstance().insertUser("user","user", "user", "user");
+        } catch (Throwable throwable) {
+            System.out.println("ERROR::Start_static::"+throwable.toString());
+        }
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter("ButtonName").equals("Delete_All_Users")) {
-            try{
-                usi.cleanTable();
-            } catch (Throwable throwable) {
-                System.out.println("ERROR::usi.cleanTable()::"+throwable.toString());
+        String password = req.getParameter("password");
+        String login = req.getParameter("login");
+        try {
+            User us = usi.getUser(login);
+            if(us.getPassword().equals(password)) {
+                if(us.getRole().equals("admin")) {
+                    rights = true;
+                    resp.sendRedirect("/admin");
+                    return;
+                } else {
+                    rights = false;
+                    resp.sendRedirect("/user");
+                    return;
+                }
             }
-        } else {
-            try{
-                int number = Integer.parseInt(req.getParameter("ButtonName").substring(12));
-                usi.deleteId(number);
-            } catch (Throwable throwable) {
-                System.out.println("throwable[usi.getListUsers()]: "+throwable.toString());
-            }
+        } catch (Throwable throwable) {
+            System.out.println("ERROR::Start_doPost()::"+throwable.toString());
         }
-        resp.sendRedirect("/start");
+        this.doGet(req, resp);
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> userList = new ArrayList<User>();
-        try {
-            userList = usi.getListUsers();
-        } catch (Throwable throwable) {
-            System.out.println("throwable [usi.getListUsers()]: "+throwable.toString());
-        }
-        req.setAttribute("users", userList);
         getServletContext().getRequestDispatcher("/start.jsp").forward(req, resp);
     }
 }

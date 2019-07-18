@@ -28,7 +28,7 @@ public class UserDaoJDBCimpl implements UserDAO {
     }
     public void createTable() throws SQLException {
         executor.execUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT, " +
-                "login VARCHAR(255), name VARCHAR(255), password VARCHAR(255), " +
+                "role VARCHAR(255), login VARCHAR(255), name VARCHAR(255), password VARCHAR(255), " +
                 "PRIMARY KEY (id))");
     }
     public void dropTable() throws SQLException {
@@ -41,11 +41,11 @@ public class UserDaoJDBCimpl implements UserDAO {
     public void deleteId(int id) throws SQLException {
         executor.execUpdate("DELETE FROM users WHERE Id = '"+id+"'");
     }
-    public void updateId(int id, String name, String login, String password) throws SQLException {
-        executor.execUpdate("UPDATE users SET name = '"+name+"', login = '"+login+"', password = '"+password+"' WHERE Id = '"+Integer.toString(id)+"'");
+    public void updateId(int id, String role, String name, String login, String password) throws SQLException {
+        executor.execUpdate("UPDATE users SET role = '"+role+"', name = '"+name+"', login = '"+login+"', password = '"+password+"' WHERE Id = '"+Integer.toString(id)+"'");
     }
-    public void insertUser(String name, String password, String login) throws SQLException {
-        executor.execUpdate("INSERT INTO users (name, login, password) VALUES ('" + name + "','" + login + "','" + password + "')");
+    public void insertUser(String role, String name, String password, String login) throws SQLException {
+        executor.execUpdate("INSERT INTO users (role, name, login, password) VALUES ('" + role + "', '" + name + "','" + login + "','" + password + "')");
     }
     public long getUserId(String login) throws SQLException {
         return executor.execQuery("SELECT * FROM users WHERE login='" + login + "'", result -> {
@@ -63,7 +63,7 @@ public class UserDaoJDBCimpl implements UserDAO {
         return executor.execQuery("SELECT * FROM users", result -> {
             List<User> llistUsers = new ArrayList<User>();
             while(result.next()) {
-                llistUsers.add(new User(result.getLong(1), result.getString(2), result.getString(3), result.getString(4)));
+                llistUsers.add(new User(result.getLong(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5)));
             }
             return llistUsers;
         });
@@ -71,13 +71,13 @@ public class UserDaoJDBCimpl implements UserDAO {
     public User getUser(String login) throws  SQLException {
         return executor.execQuery("SELECT * FROM users WHERE login='" + login + "'", result -> {
             result.next();
-            return new User(result.getLong(1), result.getString(2), result.getString(3), result.getString(4));
+            return new User(result.getLong(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
         });
     }
     public User get(long id) throws SQLException {
         return executor.execQuery("SELECT * FROM users WHERE Id=" + id, result -> {
             result.next();
-            return new User(result.getLong(1), result.getString(2), result.getString(3), result.getString(4));
+            return new User(result.getLong(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
         });
     }
 }

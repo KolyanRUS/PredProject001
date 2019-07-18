@@ -32,7 +32,7 @@ public class Util {
     public Connection getMySQLConnection() {
         try {
             Properties props = new Properties();
-            try(BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("database.properties")))) {
+            /*try(BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("database.properties")))) {
                 String str;
                 //getClass().getClassLoader().getResourceAsStream("database.properties");
                 System.out.println("---===---===---===");//getClass().getResource("/").getPath()+"\\database.properties"
@@ -40,7 +40,7 @@ public class Util {
                     System.out.println(str);//
                 }
                 System.out.println("---===---===---===");
-            }
+            }*/
             try(InputStream in = getClass().getClassLoader().getResourceAsStream("database.properties")){
                 props.load(in);
             }
