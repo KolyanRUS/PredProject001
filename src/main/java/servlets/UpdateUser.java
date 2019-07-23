@@ -27,11 +27,7 @@ public class UpdateUser extends HttpServlet{
         } catch (Throwable throwable) {
             System.out.println("ERROR::usi.updateId(id,name,login,password)::"+throwable.toString());
         }
-        if(Start.rights==true) {
-            resp.sendRedirect("/admin");
-        } else {
-            resp.sendRedirect("/user");
-        }
+        resp.sendRedirect("/admin");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

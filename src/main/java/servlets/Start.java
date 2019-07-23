@@ -35,11 +35,17 @@ public class Start extends HttpServlet{
             User us = usi.getUser(login);
             if(us.getPassword().equals(password)) {
                 if(us.getRole().equals("admin")) {
-                    rights = true;
+                    req.getSession().removeAttribute("autorization");
+                    req.getSession().setAttribute("autorization", "true");
+                    req.getSession().removeAttribute("role");
+                    req.getSession().setAttribute("role", "admin");//rights = true;
                     resp.sendRedirect("/admin");
                     return;
                 } else {
-                    rights = false;
+                    req.getSession().removeAttribute("autorization");
+                    req.getSession().setAttribute("autorization", "true");
+                    req.getSession().removeAttribute("role");
+                    req.getSession().setAttribute("role", "user");//rights = false;
                     resp.sendRedirect("/user");
                     return;
                 }
@@ -51,7 +57,13 @@ public class Start extends HttpServlet{
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("y==============================y");
+        //req.getSession().setAttribute("autorization", "false");
+        String autorization = (String)req.getSession().getAttribute("autorization");
+        System.out.println("AAAutorization::"+autorization);
+        System.out.println("y==============================y");
         getServletContext().getRequestDispatcher("/start.jsp").forward(req, resp);
+        System.out.println("y==============================y");
     }
 }
 /*
