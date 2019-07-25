@@ -22,7 +22,7 @@
     <a href="/user">User_Menu</a>
 </div>
 <div>
-    <form action="createuser" method="post">
+    <form action="/admin/createuser" method="post">
         <p><small>Role selection</small>
             <select name="role">
             <option selected="selected" value="user">user</option>

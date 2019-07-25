@@ -1,4 +1,4 @@
-package servlets;
+package servlets.admin;
 import dbService.UserServiceImple;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileWriter;
 import java.io.IOException;
-@WebServlet(name="UpdateUser",urlPatterns = "/updateuser")
-public class UpdateUser extends HttpServlet{
+
+@WebServlet(name="CreateUser",urlPatterns = "/admin/createuser")
+public class CreateUser extends HttpServlet{
     UserServiceImple usi = UserServiceImple.getInstance();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -16,21 +17,15 @@ public class UpdateUser extends HttpServlet{
         String name = req.getParameter("name");
         String password = req.getParameter("password");
         String login = req.getParameter("login");
-        int id = -1;
         try {
-            id = Integer.parseInt(req.getParameter("id"));
-        } catch(Throwable throwable) {
-            System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"id\"))::"+throwable.toString());
-        }
-        try {
-            usi.updateId(id,role,name,login,password);
+            usi.insertUser(role,name,password,login);
         } catch (Throwable throwable) {
-            System.out.println("ERROR::usi.updateId(id,name,login,password)::"+throwable.toString());
+            System.out.println("throwable [usi.insertUser(name,password,login)]: "+throwable.toString());
         }
         resp.sendRedirect("/admin");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/updateuserform.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/createuserform.jsp").forward(req, resp);
     }
 }

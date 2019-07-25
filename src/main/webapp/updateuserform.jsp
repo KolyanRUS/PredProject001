@@ -15,7 +15,7 @@
     <a href="/user">User_Menu</a>
 </div>
 <div>
-    <form action="updateuser" method="post">
+    <form action="/admin/updateuser" method="post">
         <p><small>Role selection</small>
             <select name="role">
                 <option selected="selected" value="user">user</option>
