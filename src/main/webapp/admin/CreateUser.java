@@ -1,4 +1,3 @@
-package servlets.admin;
 import dbService.UserServiceImple;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +25,6 @@ public class CreateUser extends HttpServlet{
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/createuserform.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/createuserform-jsp.jsp").forward(req, resp);
     }
 }

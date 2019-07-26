@@ -1,4 +1,3 @@
-package servlets.admin;
 import dbService.UserServiceImple;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +30,6 @@ public class UpdateUser extends HttpServlet{
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/updateuserform.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/updateuserform-jsp.jsp").forward(req, resp);
     }
 }

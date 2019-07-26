@@ -58,11 +58,10 @@ public class Start extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("y==============================y");
-        //req.getSession().setAttribute("autorization", "false");
         String autorization = (String)req.getSession().getAttribute("autorization");
         System.out.println("AAAutorization::"+autorization);
         System.out.println("y==============================y");
-        getServletContext().getRequestDispatcher("/start.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/start-jsp.jsp").forward(req, resp);
         System.out.println("y==============================y");
     }
 }
