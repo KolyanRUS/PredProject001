@@ -27,12 +27,13 @@
             <--%>
             <c:forEach var="rolle" items="${rolesList}">
                 <select name="role">
-                    <option selected="selected" value="${rolle.role}">${rolle.role}</option>
-                    <option value="${rolle.notrole}">${rolle.notrole}</option>
+                    <option selected="selected" value="${rolle[0]}">${rolle[0]}</option>
+                    <option value="${rolle[1]}">${rolle[1]}</option>
                 </select>
             </c:forEach></p>
         <p><small>Id</small>
-            <input type="text" name="id" value="${user_id}" size="5" />
+            <small>${user_id}</small>
+            <input type="hidden" name="id" value="${user_id}"/>
         </p><%----%>
         <p><small>Name</small>
             <input type="text" name="name" value="${user_name}" size="5" />
