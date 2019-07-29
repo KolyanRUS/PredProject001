@@ -13,18 +13,10 @@
 <div>
     <a href="/admin">Admin_Menu</a>
     <a href="/user">User_Menu</a>
-    <%--><c:forEach var="rolle" items="${rolesList}">
-        <a href="/user"><c:out value="${rolle.getRole()}" /></a>
-    </c:forEach><--%>
 </div>
 <div>
     <form action="/admin/updateuser" method="post">
         <p><small>Role selection</small>
-            <%-->
-            <c:if test="${param.age > 24}">
-                Возраст более 24 лет
-            </c:if>
-            <--%>
             <c:forEach var="rolle" items="${rolesList}">
                 <select name="role">
                     <option selected="selected" value="${rolle[0]}">${rolle[0]}</option>

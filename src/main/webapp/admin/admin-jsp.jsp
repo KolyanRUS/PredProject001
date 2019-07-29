@@ -39,11 +39,11 @@
                 </td>
                 <td>
                     <form action="/admin/updateuser" method="get">
-                        <input type="hidden" name="user_role" value="${user.getRole()}"/>
                         <input type="hidden" name="user_id" value="${user.getId()}"/>
-                        <input type="hidden" name="user_name" value="${user.getName()}"/>
-                        <input type="hidden" name="user_login" value="${user.getLogin()}"/>
-                        <input type="hidden" name="user_password" value="${user.getPassword()}"/>
+                            <%--<input type="hidden" name="user_role" value="${user.getRole()}"/>
+                            <input type="hidden" name="user_name" value="${user.getName()}"/>
+                            <input type="hidden" name="user_login" value="${user.getLogin()}"/>
+                            <input type="hidden" name="user_password" value="${user.getPassword()}"/--%>
 
                         <c:set var="user__role" scope="application" value="${user.getRole()}"/>
                         <c:set var="user__id" scope="application" value="${user.getId()}"/>

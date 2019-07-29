@@ -37,31 +37,28 @@ public class UpdateUser extends HttpServlet{
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("user_role", req.getParameter("user_role"));
+        int id = -1;//req.getParameter("user_id");
+        String role = null;
+        try {
+            id = Integer.parseInt(req.getParameter("user_id"));
+            User us = usi.get(id);
+            role = us.getRole();
+            req.getSession().setAttribute("user_role", role);
+            req.getSession().setAttribute("user_id", id);
+            req.getSession().setAttribute("user_name", us.getName());
+            req.getSession().setAttribute("user_login", us.getLogin());
+            req.getSession().setAttribute("user_password", us.getPassword());
+        } catch(Throwable throwable) {
+            System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"user_id\"))::"+throwable.toString());
+        }
 
         List<String[]> rolesList = new ArrayList<String[]>();
-        if(req.getParameter("user_role").equals("admin")) {
+        if(role.equals("admin")) {
             rolesList.add(new String[]{"admin","user"});
-        } else if(req.getParameter("user_role").equals("user")) {
+        } else if(role.equals("user")) {
             rolesList.add(new String[]{"user","admin"});
         }
         req.setAttribute("rolesList", rolesList);
-
-
-
-
-
-
-
-        req.getSession().setAttribute("user_id", req.getParameter("user_id"));
-        req.getSession().setAttribute("user_name", req.getParameter("user_name"));
-        req.getSession().setAttribute("user_login", req.getParameter("user_login"));
-        req.getSession().setAttribute("user_password", req.getParameter("user_password"));
-        System.out.println("UpdateUser::doGet::req.getParameter(\"user_role\") = "+req.getParameter("user_role"));
-        System.out.println("UpdateUser::doGet::req.getParameter(\"user_id\") = "+req.getParameter("user_id"));
-        System.out.println("UpdateUser::doGet::req.getParameter(\"user_name\") = "+req.getParameter("user_name"));
-        System.out.println("UpdateUser::doGet::req.getParameter(\"user_login\") = "+req.getParameter("user_login"));
-        System.out.println("UpdateUser::doGet::req.getParameter(\"user_password\") = "+req.getParameter("user_password"));
         getServletContext().getRequestDispatcher("/admin/updateuserform-jsp.jsp").forward(req, resp);
     }
 }
