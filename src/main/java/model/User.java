@@ -9,23 +9,12 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "role", unique = false, updatable = false)
-    private String role;
     @Column(name = "name", unique = false, updatable = false)
     private String name;
     @Column(name = "password", unique = false, updatable = false)
     private String password;
     @Column(name = "login", unique = true, updatable = false)
     private String login;
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public String getPassword() {
         return password;
@@ -47,8 +36,7 @@ public class User {
     public User() {
     }
 
-    public User(long id, String role, String name, String password, String login) {
-        this.role = role;
+    public User(long id, String name, String password, String login) {
         this.id = id;
         this.name = name;
         this.password = password;

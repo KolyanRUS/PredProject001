@@ -39,11 +39,11 @@ public class UserServiceImple implements UserService {
     public void deleteId(int id) throws SQLException {
         dao.deleteId(id);
     }
-    public void updateId(int id, String role, String name, String login, String password) throws SQLException {
-        dao.updateId(id,role,name,login,password);
+    public void updateId(int id, String name, String login, String password) throws SQLException {
+        dao.updateId(id,name,login,password);
     }
-    public void insertUser(String role, String name, String password, String login) throws SQLException {
-        dao.insertUser(role,name,password,login);
+    public void insertUser(String name, String password, String login) throws SQLException {
+        dao.insertUser(name,password,login);
     }
     public long getUserId(String login) throws SQLException {
         return dao.getUserId(login);

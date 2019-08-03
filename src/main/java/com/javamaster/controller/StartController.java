@@ -18,8 +18,8 @@ public class StartController {
     UserServiceImple usi = UserServiceImple.getInstance();
     static {
         try {
-            UserServiceImple.getInstance().insertUser("admin","admin", "admin", "admin");
-            UserServiceImple.getInstance().insertUser("user","user", "user", "user");
+            UserServiceImple.getInstance().insertUser("admin","admin", "admin");
+            UserServiceImple.getInstance().insertUser("user","user", "user");
         } catch (Throwable throwable) {
             System.out.println("ERROR::Start_static::"+throwable.toString());
         }
@@ -103,7 +103,7 @@ public class StartController {
     @RequestMapping(value="/createuser", method=RequestMethod.POST)
     public String getCreateuserPageP(Model model, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, HttpServletResponse resp) {
         try {
-            usi.insertUser("admin",name,password,login);
+            usi.insertUser(name,password,login);
             resp.sendRedirect("/admin");
         } catch (Throwable throwable) {
             System.out.println("throwable [usi.insertUser(name,password,login)]: "+throwable.toString());
@@ -142,7 +142,7 @@ public class StartController {
             System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"idd\"))::"+throwable.toString());
         }
         try {
-            usi.updateId(idd,"admin",name,login,password);
+            usi.updateId(idd,name,login,password);
             resp.sendRedirect("/admin");
         } catch (Throwable throwable) {
             System.out.println("ERROR::usi.updateId(id,name,login,password)::"+throwable.toString());

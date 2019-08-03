@@ -16,7 +16,6 @@
     <table>
         <tr>
             <th>Id</th>
-            <th>User_role</th>
             <th>User_name</th>
             <th>User_login</th>
             <th>User_password</th>
@@ -26,7 +25,6 @@
         <c:forEach var="user" items="${users}">
             <tr>
                 <td><c:out value="${user.getId()}" /></td>
-                <td><c:out value="${user.getRole()}" /></td>
                 <td><c:out value="${user.getName()}" /></td>
                 <td><c:out value="${user.getLogin()}" /></td>
                 <td><c:out value="${user.getPassword()}" /></td>

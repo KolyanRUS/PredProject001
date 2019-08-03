@@ -21,11 +21,6 @@
 </div>
 <div>
     <form action="/createuser" method="post">
-        <p><small>Role selection</small>
-            <select name="role">
-            <option selected="selected" value="user">user</option>
-            <option value="admin">admin</option>
-        </select></p>
         <p><small>Name</small>
             <input type="text" name="name" value="" size="5" />
         </p>

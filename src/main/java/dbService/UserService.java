@@ -17,8 +17,8 @@ interface UserService {
 	void dropTable() throws SQLException;
 	void cleanTable() throws SQLException;
 	void deleteId(int id) throws SQLException;
-	void updateId(int id, String role, String name, String login, String password) throws SQLException;
-	void insertUser(String role, String name, String password, String login) throws SQLException;
+	void updateId(int id, String name, String login, String password) throws SQLException;
+	void insertUser(String name, String password, String login) throws SQLException;
 	long getUserId(String login) throws SQLException;
 	List<User> getListUsers() throws SQLException;
 	User getUser(String login) throws SQLException;
