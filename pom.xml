@@ -23,12 +23,14 @@
     </build>
 
     <properties>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <com.h2database.h2.version>1.4.187</com.h2database.h2.version>
         <mysql.mysql-connector-java.version>5.1.35</mysql.mysql-connector-java.version>
         <org.hibernate.hibernate-core.version>4.3.10.Final</org.hibernate.hibernate-core.version>
     </properties>
+
 
     <dependencies>
         <dependency>
@@ -61,11 +63,47 @@
             <artifactId>hibernate-core</artifactId>
             <version>${org.hibernate.hibernate-core.version}</version>
         </dependency>
+        <!-- Servlet Library -->
+        <!-- http://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring dependencies -->
+        <!-- http://mvnrepository.com/artifact/org.springframework/spring-core -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>4.3.1.RELEASE</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.3.1.RELEASE</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.1.RELEASE</version>
+        </dependency>
         <!-- Servlet API 4.0 for tomcat 9 -->
         <!--<dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.0</version>
         </dependency>-->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

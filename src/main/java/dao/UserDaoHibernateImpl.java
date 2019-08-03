@@ -105,7 +105,9 @@ public class UserDaoHibernateImpl implements UserDAO {
         try {
             session = sessionFactory.openSession();
             User user = (User) session.load(User.class, id);
+            User us = new User(user.getId(),user.getRole(),user.getName(),user.getPassword(),user.getLogin());
             session.close();
+            return us;
         } catch (Throwable t) {
             System.out.println("ERROR::get()::"+t.toString());
         }
