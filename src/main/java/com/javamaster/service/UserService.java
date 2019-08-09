@@ -1,4 +1,4 @@
-package dbService;
+package com.javamaster.service;
 
 import model.User;
 

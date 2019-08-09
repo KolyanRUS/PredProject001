@@ -1,6 +1,6 @@
 package com.javamaster.controller;
 
-import dbService.UserServiceImple;
+import com.javamaster.service.UserServiceImple;
 import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +142,7 @@ public class StartController {
         }
         try {
             usi.updateId(idd,name,login,password);
-            resp.sendRedirect("/admin");
+            resp.sendRedirect("/admin");//return "redirect:admin":
         } catch (Throwable throwable) {
             System.out.println("ERROR::usi.updateId(id,name,login,password)::"+throwable.toString());
         }

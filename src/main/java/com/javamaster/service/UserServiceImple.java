@@ -1,13 +1,9 @@
-package dbService;
+package com.javamaster.service;
 
 import dao.*;
 import factory.UserDAOFactoryImpl;
-import factory.UserDaoFactory;
 import model.User;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
 
