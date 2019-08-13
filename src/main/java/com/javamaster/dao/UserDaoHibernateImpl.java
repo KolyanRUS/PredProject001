@@ -1,7 +1,6 @@
 package com.javamaster.dao;
 
 import com.javamaster.model.User;
-import com.javamaster.util.Util;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -11,25 +10,24 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.*;
 
 @Repository
 public class UserDaoHibernateImpl implements UserDAO {
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
     private Session session;
-    @Autowired
-    public UserDaoHibernateImpl(Util util) {
-        this.sessionFactory = createSessionFactory(util.getMySqlConfiguration());
+    public UserDaoHibernateImpl() {
     }
     public void cleanTable() throws SQLException {
         session = sessionFactory.openSession();
-        List<User> users_list = getListUsers();//session.createQuery("FROM "+User.class.getSimpleName()).list();
+        List<User> users_list = getListUsers();
         for (User user: users_list
         ) {
             deleteId((int)user.getId());
         }
-        //session.close();
     }
     public void deleteId(int id) throws SQLException {
         session = sessionFactory.openSession();
@@ -103,10 +101,12 @@ public class UserDaoHibernateImpl implements UserDAO {
         }
         return null;
     }
-    private static SessionFactory createSessionFactory(Configuration configuration) {
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;//
+        /*StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
         builder.applySettings(configuration.getProperties());
         ServiceRegistry serviceRegistry = builder.build();
-        return configuration.buildSessionFactory(serviceRegistry);
+        this.sessionFactory = configuration.buildSessionFactory(serviceRegistry);*/
     }
 }
