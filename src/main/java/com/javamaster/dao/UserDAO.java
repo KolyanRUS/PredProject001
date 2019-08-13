@@ -1,8 +1,7 @@
-package dao;
+package com.javamaster.dao;
 
-import model.User;
+import com.javamaster.model.User;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,9 +13,6 @@ import java.util.List;
  * Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
 public interface UserDAO {
-    void createTable() throws SQLException;
-
-    void dropTable() throws SQLException;
 
     void cleanTable() throws SQLException;
 

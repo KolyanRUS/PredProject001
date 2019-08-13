@@ -1,0 +1,26 @@
+@RequestMapping(value="/start", method=RequestMethod.GET)
+    public String getStartPageG(/*Model com.javamaster.model*/) {
+        return "start";
+    }
+    @RequestMapping(value="/start", method=RequestMethod.POST)
+    public String getStartPageP(Model model, @RequestParam(value="login") String login, @RequestParam(value="password") String password, HttpServletResponse resp) {
+        try {
+            User us = usi.getUser(login);
+            if(us.getPassword().equals(password)) {
+                return "redirect:/admin";//resp.sendRedirect("/admin");
+                //return "admin";
+                /*if(us.getRole().equals("admin")) {
+                    com.javamaster.model.addAttribute("autorization","true");
+                    //com.javamaster.model.addAttribute("role","admin");
+                    return "admin";
+                } else {
+                    com.javamaster.model.addAttribute("autorization","true");
+                    //com.javamaster.model.addAttribute("role","admin");
+                    return "user";
+                }*/
+            }
+        } catch (Throwable throwable) {
+            System.out.println("ERROR::StartController_doPost()::"+throwable.toString());
+        }
+        return "start";
+    }

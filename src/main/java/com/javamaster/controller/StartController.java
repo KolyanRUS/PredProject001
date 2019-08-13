@@ -1,7 +1,11 @@
 package com.javamaster.controller;
 
+import com.javamaster.dao.UserDAO;
+import com.javamaster.dao.UserDaoHibernateImpl;
 import com.javamaster.service.UserServiceImple;
-import model.User;
+import com.javamaster.model.User;
+import com.javamaster.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,44 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/")//1)добавить аутоаризиды//2)убрать фактори
 public class StartController {
-    UserServiceImple usi = UserServiceImple.getInstance();
-    static {
-        try {
-            UserServiceImple.getInstance().insertUser("admin","admin", "admin");
-            UserServiceImple.getInstance().insertUser("user","user", "user");
-        } catch (Throwable throwable) {
-            System.out.println("ERROR::Start_static::"+throwable.toString());
-        }
-    }
+
+    @Autowired
+    UserServiceImple usi;// = UserServiceImple.getInstance();
 
 
-    @RequestMapping(value="/start", method=RequestMethod.GET)
-    public String getStartPageG(/*Model model*/) {
-        return "start";
-    }
-    @RequestMapping(value="/start", method=RequestMethod.POST)
-    public String getStartPageP(Model model, @RequestParam(value="login") String login, @RequestParam(value="password") String password, HttpServletResponse resp) {
-        try {
-            User us = usi.getUser(login);
-            if(us.getPassword().equals(password)) {
-                resp.sendRedirect("/admin");
-                //return "admin";
-                /*if(us.getRole().equals("admin")) {
-                    model.addAttribute("autorization","true");
-                    //model.addAttribute("role","admin");
-                    return "admin";
-                } else {
-                    model.addAttribute("autorization","true");
-                    //model.addAttribute("role","admin");
-                    return "user";
-                }*/
-            }
-        } catch (Throwable throwable) {
-            System.out.println("ERROR::StartController_doPost()::"+throwable.toString());
-        }
-        return "start";
-    }
+
 
 
 
@@ -81,7 +55,7 @@ public class StartController {
             try {
                 int number = Integer.parseInt(butname);
                 usi.deleteId(number);
-                resp.sendRedirect("/admin");
+                return "redirect:/admin";//resp.sendRedirect("/admin");
             } catch (Throwable throwable) {
                 System.out.println("throwable[Admin_doPost_deleteUser]: "+throwable.toString());
             }
@@ -103,7 +77,7 @@ public class StartController {
     public String getCreateuserPageP(Model model, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, HttpServletResponse resp) {
         try {
             usi.insertUser(name,password,login);
-            resp.sendRedirect("/admin");
+            return "redirect:/admin";//resp.sendRedirect("/admin");
         } catch (Throwable throwable) {
             System.out.println("throwable [usi.insertUser(name,password,login)]: "+throwable.toString());
         }

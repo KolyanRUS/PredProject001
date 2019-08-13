@@ -1,35 +1,26 @@
-package dao;
+package com.javamaster.dao;
 
-import executor.Executor;
-import model.User;
-import util.Util;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.javamaster.model.User;
+import com.javamaster.util.Util;
+
 import java.sql.SQLException;
 import java.util.*;
-import model.User;
-import java.io.FileWriter;
+
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
-import util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.*;
+
+@Repository
 public class UserDaoHibernateImpl implements UserDAO {
     private final SessionFactory sessionFactory;
     private Session session;
-    private Executor executor;
-    public UserDaoHibernateImpl() {
-        this.sessionFactory = createSessionFactory(Util.getInstance().getMySqlConfiguration());
-        this.executor = new Executor(Util.getInstance().getMySQLConnection());
-    }
-    public void createTable() throws SQLException {
-        executor.execUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT, " +
-                "login VARCHAR(255), name VARCHAR(255), password VARCHAR(255), " +
-                "PRIMARY KEY (id))");
-    }
-    public void dropTable() throws SQLException {
-        executor.execUpdate("DROP TABLE IF EXISTS users");
+    @Autowired
+    public UserDaoHibernateImpl(Util util) {
+        this.sessionFactory = createSessionFactory(util.getMySqlConfiguration());
     }
     public void cleanTable() throws SQLException {
         session = sessionFactory.openSession();

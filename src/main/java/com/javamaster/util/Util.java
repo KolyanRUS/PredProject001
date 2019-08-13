@@ -1,15 +1,14 @@
-package util;
+package com.javamaster.util;
 
-import model.User;
+import com.javamaster.model.User;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
-
+@Component
 public class Util {
     private static final String hibernate_show_sql = "true";
     //в консоль будут выводиться SQL-запросы, которые скрыты за Hibernate-кодом

@@ -1,6 +1,6 @@
 package com.javamaster.service;
 
-import model.User;
+import com.javamaster.model.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,8 +13,6 @@ import java.util.List;
  *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
  */
 interface UserService {
-	void createTable() throws SQLException;
-	void dropTable() throws SQLException;
 	void cleanTable() throws SQLException;
 	void deleteId(int id) throws SQLException;
 	void updateId(int id, String name, String login, String password) throws SQLException;
