@@ -27,26 +27,11 @@ public class StartController {
     @Autowired
     private UserServiceImple usi;// = UserServiceImple.getInstance();
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     //@PersistenceContext
     //private LocalContainerEntityManagerFactoryBean entityManagerFactory;
-
-
-
-
-
-
-
-
-
-
     @RequestMapping(value="/admin", method=RequestMethod.GET)
     public String getAdminPageGet(Model model) throws SQLException {
-        //List<User> llis = entityManager.createQuery("select u from User u", User.class).getResultList();
-        //EntityManager em = entityManagerFactory.createEntityManager();
-        List<User> userList = entityManager.createQuery("select u from User u", User.class).getResultList();//new ArrayList<User>();
+        List<User> userList = usi.getListUsers();
         userList = usi.getListUsers();
         model.addAttribute("users", userList);
         return "admin";
