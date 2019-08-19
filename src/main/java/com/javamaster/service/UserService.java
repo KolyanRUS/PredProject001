@@ -5,13 +5,6 @@ import com.javamaster.model.User;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @author v.chibrikov
- *         <p>
- *         Пример кода для курса на https://stepic.org/
- *         <p>
- *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
- */
 interface UserService {
 	void cleanTable() throws SQLException;
 	void deleteId(int id) throws SQLException;

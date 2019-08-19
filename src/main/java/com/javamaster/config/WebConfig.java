@@ -23,17 +23,4 @@ public class WebConfig {
         resolver.setSuffix(".jsp");
         return resolver;
     }
-    /*@Bean
-    public org.hibernate.cfg.Configuration getMySqlConfiguration() {
-        org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
-        configuration.addAnnotatedClass(User.class);
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost/Users");
-        configuration.setProperty("hibernate.connection.username", "Kolyan1998");
-        configuration.setProperty("hibernate.connection.password", "admin");
-        configuration.setProperty("hibernate.show_sql", "true");
-        configuration.setProperty("hibernate.hbm2ddl.auto", "create");
-        return configuration;
-    }*/
 }

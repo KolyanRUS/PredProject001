@@ -14,9 +14,11 @@ import org.springframework.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public class UserDaoHibernateImpl implements UserDAO {
+    @Autowired
     private SessionFactory sessionFactory;
     private Session session;
     public UserDaoHibernateImpl() {
@@ -100,13 +102,5 @@ public class UserDaoHibernateImpl implements UserDAO {
             System.out.println("ERROR::get()::"+t.toString());
         }
         return null;
-    }
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;//
-        /*StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-        builder.applySettings(configuration.getProperties());
-        ServiceRegistry serviceRegistry = builder.build();
-        this.sessionFactory = configuration.buildSessionFactory(serviceRegistry);*/
     }
 }

@@ -5,12 +5,16 @@ import com.javamaster.dao.UserDaoHibernateImpl;
 import com.javamaster.service.UserServiceImple;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,6 +27,12 @@ public class StartController {
     @Autowired
     private UserServiceImple usi;// = UserServiceImple.getInstance();
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    //@PersistenceContext
+    //private LocalContainerEntityManagerFactoryBean entityManagerFactory;
+
 
 
 
@@ -34,7 +44,9 @@ public class StartController {
 
     @RequestMapping(value="/admin", method=RequestMethod.GET)
     public String getAdminPageGet(Model model) throws SQLException {
-        List<User> userList = new ArrayList<User>();
+        //List<User> llis = entityManager.createQuery("select u from User u", User.class).getResultList();
+        //EntityManager em = entityManagerFactory.createEntityManager();
+        List<User> userList = entityManager.createQuery("select u from User u", User.class).getResultList();//new ArrayList<User>();
         userList = usi.getListUsers();
         model.addAttribute("users", userList);
         return "admin";
