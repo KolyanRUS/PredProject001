@@ -13,11 +13,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.*;
 import javax.persistence.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
+@Transactional
 public class UserDaoHibernateImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
@@ -25,11 +27,12 @@ public class UserDaoHibernateImpl implements UserDAO {
         List<User> users_list = getListUsers();
         for (User user: users_list
         ) {
-            deleteId((int)user.getId());
+            deleteId(user.getId());
         }
     }
-    public void deleteId(int id) throws SQLException {
-        Query q = entityManager.createQuery("DELETE User WHERE id = :id");
+    public void deleteId(long id) throws SQLException {
+        Query q = entityManager.createQuery("DELETE User WHERE id = :idd");
+        q.setParameter("idd", id);
         q.executeUpdate();
     }
     public void updateId(int id, String name, String login, String password) throws SQLException {
@@ -62,13 +65,17 @@ public class UserDaoHibernateImpl implements UserDAO {
         return null;
     }
     public User getUser(String login) throws SQLException {
-        String hql = "SELECT e FROM User e WHERE e.getLogin() = :"+login;
+        //String hql = "SELECT e FROM User e WHERE e.getLogin() = :"+login;
+        String hql = "FROM User WHERE login = :loginn";
         Query q = entityManager.createQuery(hql);
+        q.setParameter("loginn", login);
         return (User) q.getSingleResult();
     }
     public User get(long id) throws SQLException {
-        String hql = "SELECT e FROM User e WHERE e.getId() = :"+id;
+        //String hql = "SELECT e FROM User e WHERE e.getId() = :"+id;
+        String hql = "FROM User WHERE id = :idd";
         Query q = entityManager.createQuery(hql);
+        q.setParameter("idd",id);
         return (User) q.getSingleResult();
     }
 }

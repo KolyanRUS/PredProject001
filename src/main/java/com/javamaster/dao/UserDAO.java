@@ -16,7 +16,7 @@ public interface UserDAO {
 
     void cleanTable() throws SQLException;
 
-    void deleteId(int id) throws SQLException;
+    void deleteId(long id) throws SQLException;
 
     void updateId(int id, String name, String login, String password) throws SQLException;
 
