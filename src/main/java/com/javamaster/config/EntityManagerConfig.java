@@ -1,7 +1,5 @@
 package com.javamaster.config;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -22,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScan("com.javamaster")
 @PropertySource(value = {"classpath:database.properties"})
-public class MyHibernateConfig {
+public class EntityManagerConfig {
 
     @Autowired
     private Environment environment;
@@ -39,27 +37,6 @@ public class MyHibernateConfig {
         emFactory.setJpaProperties(properties);
         emFactory.setPackagesToScan("com.javamaster");
         return emFactory;
-
-
-
-
-        /*LocalContainerEntityManagerFactoryBean fb = new LocalContainerEntityManagerFactoryBean();
-        fb.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-            //было подозрение, что из-за вызова метода dataSource() всё летит к чертям, пожтому создал тут отдельный сурс
-            DriverManagerDataSource dataSource = new DriverManagerDataSource();
-            System.out.println("driverClassName = "+environment.getRequiredProperty("jdbc.driverClassName"));
-            dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-            dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-            dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-            dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-            fb.setDataSource(dataSource);
-        fb.setPackagesToScan(new String[] { "com.javamaster.model" }/*environment.getRequiredProperty()*//*);
-        fb.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-        fb.setJpaProperties(properties);
-        return fb;*/
     }
 
     @Bean

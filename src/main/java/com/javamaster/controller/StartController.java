@@ -1,34 +1,27 @@
 package com.javamaster.controller;
 
-import com.javamaster.dao.UserDAO;
-import com.javamaster.dao.UserDaoHibernateImpl;
 import com.javamaster.service.UserServiceImple;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")//1)добавить аутоаризиды//2)убрать фактори
+@RequestMapping("/")
 public class StartController {
 
     @Autowired
-    private UserServiceImple usi;// = UserServiceImple.getInstance();
+    private UserServiceImple usi;
 
-    //@PersistenceContext
-    //private LocalContainerEntityManagerFactoryBean entityManagerFactory;
+
     @RequestMapping(value="/admin", method=RequestMethod.GET)
     public String getAdminPageGet(Model model) throws SQLException {
         List<User> userList = usi.getListUsers();
@@ -44,7 +37,7 @@ public class StartController {
             try {
                 int number = Integer.parseInt(butname);
                 usi.deleteId(number);
-                return "redirect:/admin";//resp.sendRedirect("/admin");
+                return "redirect:/admin";
             } catch (Throwable throwable) {
                 System.out.println("throwable[Admin_doPost_deleteUser]: "+throwable.toString());
             }
@@ -65,7 +58,7 @@ public class StartController {
     @RequestMapping(value="/createuser", method=RequestMethod.POST)
     public String getCreateuserPagePost(Model model, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, HttpServletResponse resp) throws SQLException {
         usi.insertUser(name,password,login);
-        return "redirect:/admin";//resp.sendRedirect("/admin");
+        return "redirect:/admin";
     }
 
 
@@ -79,7 +72,7 @@ public class StartController {
         int id = -1;
         try {
             id = Integer.parseInt(user_id);
-            User us = usi.get(id);//new User(id,""+usi.get(id).getRole(),""+usi.get(id).getName(),""+usi.get(id).getPassword(),""+usi.get(id).getLogin());
+            User us = usi.get(id);
             model.addAttribute("us",us);
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id+"::id::"+id);
@@ -96,7 +89,7 @@ public class StartController {
         try {
             idd = Integer.parseInt(id);
             usi.updateId(idd,name,login,password);
-            return "redirect:/admin";//return "redirect:admin":
+            return "redirect:/admin";
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"idd\"))::"+throwable.toString());
         }

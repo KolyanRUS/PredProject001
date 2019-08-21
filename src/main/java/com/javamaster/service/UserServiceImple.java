@@ -11,7 +11,7 @@ import java.util.List;
 public class UserServiceImple implements UserService {
     private UserDAO dao;
     @Autowired
-    public UserServiceImple(UserDAO dao) /*throws java.io.FileNotFoundException, java.io.IOException*/ {
+    public UserServiceImple(UserDAO dao) {
         this.dao = dao;
     }
     public void cleanTable() throws SQLException {

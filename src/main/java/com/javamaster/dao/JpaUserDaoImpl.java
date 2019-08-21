@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContext;
 
 @Repository
 @Transactional
-public class UserDaoHibernateImpl implements UserDAO {
+public class JpaUserDaoImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
     public void cleanTable() throws SQLException {
