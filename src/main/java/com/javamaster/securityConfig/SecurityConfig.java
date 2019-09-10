@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailsService")
     UserDetailsService userDetailsService;
-    @Autowired
+    /*@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth){
         try {
             auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
     /*
      * (non-Javadoc)
      *

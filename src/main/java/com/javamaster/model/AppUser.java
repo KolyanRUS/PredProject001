@@ -20,8 +20,8 @@ public class AppUser implements UserDetails {
     private String login;
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="appUser")
-    public Set<UserRole> userRole = new HashSet<UserRole>(0);
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="appUser")
+    public Set<UserRole> userRole;
 
     public String getPassword() {
         return password;

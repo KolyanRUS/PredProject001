@@ -25,13 +25,11 @@ public class AppUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
         AppUser user = appUserRepo.findByUserName(username);
-        List<GrantedAuthority> authorities = buildUserAuthority(user
-                .getAuthorities());
 
-        return buildUserForAuthentication(user, authorities);
+        return user;
     }
 
-    private UserDetails buildUserForAuthentication(AppUser user,
+    /*private UserDetails buildUserForAuthentication(AppUser user,
                                                    List<GrantedAuthority> authorities) {
         return new User(user.getUsername(), user.getPassword(),
                 user.isEnabled(), true, true, true, authorities);
@@ -46,5 +44,5 @@ public class AppUserService implements UserDetailsService {
 
         return Result;
 
-    }
+    }*/
 }
