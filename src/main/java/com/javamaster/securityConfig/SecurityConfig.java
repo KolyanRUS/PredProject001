@@ -39,14 +39,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage("/start")/*.failureUrl("/start?error")*/
+                .loginPage("/login")/*.failureUrl("/start?error")*/
                 .usernameParameter("login").passwordParameter("password")
-                /*.and().logout().logoutSuccessUrl("/login?logout").and().csrf()
-                .and().exceptionHandling().accessDeniedPage("/403")*/
+                .and().logout().logoutSuccessUrl("/login?logout").and().csrf()
+                .and().exceptionHandling().accessDeniedPage("/403")
                 //intercepted urls
                 .and().authorizeRequests()
-                .antMatchers("/admin/**")
-                .access("hasRole('ROLE_ADMIN')");
+                .antMatchers("/admin","/createuser","/updateuser")
+                .access("hasRole('admin')");
 
     }
 }
