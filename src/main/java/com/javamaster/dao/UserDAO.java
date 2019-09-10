@@ -1,6 +1,6 @@
 package com.javamaster.dao;
 
-import com.javamaster.model.User;
+import com.javamaster.model.AppUser;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,15 +18,15 @@ public interface UserDAO {
 
     void deleteId(long id) throws SQLException;
 
-    void updateId(int id, String name, String login, String password) throws SQLException;
+    void updateId(int id, String role, String name, String login, String password) throws SQLException;
 
-    void insertUser(String name, String password, String login) throws SQLException;
+    void insertUser(String role, String name, String password, String login) throws SQLException;
 
     long getUserId(String login) throws SQLException;
 
-    List<User> getListUsers() throws SQLException;
+    List<AppUser> getListUsers() throws SQLException;
 
-    User getUser(String login) throws SQLException;
+    AppUser getUser(String login) throws SQLException;
 
-    User get(long id) throws SQLException;
+    AppUser get(long id) throws SQLException;
 }

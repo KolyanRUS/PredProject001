@@ -18,21 +18,21 @@
             <th>Button for removing</th>
             <th>Button for updating</th>
         </tr>
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="appUser" items="${users}">
             <tr>
-                <td><c:out value="${user.getId()}" /></td>
-                <td><c:out value="${user.getName()}" /></td>
-                <td><c:out value="${user.getLogin()}" /></td>
-                <td><c:out value="${user.getPassword()}" /></td>
+                <td><c:out value="${appUser.getId()}" /></td>
+                <td><c:out value="${appUser.getName()}" /></td>
+                <td><c:out value="${appUser.getLogin()}" /></td>
+                <td><c:out value="${appUser.getPassword()}" /></td>
                 <td>
                     <form action="/admin" method="post">
-                        <c:set var="userid" scope="application" value="${user.getId()}"/>
-                        <input type="submit" name="ButtonName" value="${user.getId()}"/>
+                        <c:set var="userid" scope="application" value="${appUser.getId()}"/>
+                        <input type="submit" name="ButtonName" value="${appUser.getId()}"/>
                     </form>
                 </td>
                 <td>
                     <form action="/updateuser" method="get">
-                        <input type="hidden" name="user_id" value="${user.getId()}"/>
+                        <input type="hidden" name="user_id" value="${appUser.getId()}"/>
                         <input type="submit" name="ButtonName" value="Update User"/>
                     </form>
                 </td>

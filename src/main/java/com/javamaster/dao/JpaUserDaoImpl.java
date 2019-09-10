@@ -1,18 +1,13 @@
 package com.javamaster.dao;
 
-import com.javamaster.model.User;
+import com.javamaster.model.AppUser;
 
 import java.sql.SQLException;
 import java.util.*;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.service.ServiceRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.stereotype.*;
 import javax.persistence.*;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -24,20 +19,21 @@ public class JpaUserDaoImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
     public void cleanTable() throws SQLException {
-        List<User> users_list = getListUsers();
-        for (User user: users_list
+        List<AppUser> users_list = getListUsers();
+        for (AppUser appUser : users_list
         ) {
-            deleteId(user.getId());
+            deleteId(appUser.getId());
         }
     }
     public void deleteId(long id) throws SQLException {
-        Query q = entityManager.createQuery("DELETE User WHERE id = :idd");
+        Query q = entityManager.createQuery("DELETE AppUser WHERE id = :idd");
         q.setParameter("idd", id);
         q.executeUpdate();
     }
-    public void updateId(int id, String name, String login, String password) throws SQLException {
-        String hql = "update User "
-                + "SET login  = :login"
+    public void updateId(int id, String role, String name, String login, String password) throws SQLException {
+        String hql = "update AppUser "
+                + "SET role = :role,"
+                + "login  = :login"
                 +   ", name = :name"
                 +   ", password = :password"
                 +  " where id = :idParam";
@@ -48,34 +44,34 @@ public class JpaUserDaoImpl implements UserDAO {
         query.setParameter("password", password);
         query.executeUpdate();
     }
-    public void insertUser(String name, String password, String login) throws SQLException {
-        entityManager.persist(new User(getListUsers().size()+1,name,password,login));
+    public void insertUser(String role, String name, String password, String login) throws SQLException {
+        entityManager.persist(new AppUser(getListUsers().size()+1,name,password,login,role));
     }
     public long getUserId(String login) throws SQLException {
-        User us = getUser(login);
+        AppUser us = getUser(login);
         return us.getId();
     }
-    public List<User> getListUsers() throws SQLException {
+    public List<AppUser> getListUsers() throws SQLException {
         try {
-            List<User> userList = entityManager.createQuery("select u from User u", User.class).getResultList();
-            return userList;
+            List<AppUser> appUserList = entityManager.createQuery("select u from AppUser u", AppUser.class).getResultList();
+            return appUserList;
         } catch (Throwable t) {
             System.out.println("ERROR::getListUsers()::"+t.toString());
         }
         return null;
     }
-    public User getUser(String login) throws SQLException {
-        //String hql = "SELECT e FROM User e WHERE e.getLogin() = :"+login;
-        String hql = "FROM User WHERE login = :loginn";
+    public AppUser getUser(String login) throws SQLException {
+        //String hql = "SELECT e FROM AppUser e WHERE e.getLogin() = :"+login;
+        String hql = "FROM AppUser WHERE login = :loginn";
         Query q = entityManager.createQuery(hql);
         q.setParameter("loginn", login);
-        return (User) q.getSingleResult();
+        return (AppUser) q.getSingleResult();
     }
-    public User get(long id) throws SQLException {
-        //String hql = "SELECT e FROM User e WHERE e.getId() = :"+id;
-        String hql = "FROM User WHERE id = :idd";
+    public AppUser get(long id) throws SQLException {
+        //String hql = "SELECT e FROM AppUser e WHERE e.getId() = :"+id;
+        String hql = "FROM AppUser WHERE id = :idd";
         Query q = entityManager.createQuery(hql);
         q.setParameter("idd",id);
-        return (User) q.getSingleResult();
+        return (AppUser) q.getSingleResult();
     }
 }

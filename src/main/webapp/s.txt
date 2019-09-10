@@ -16,7 +16,7 @@
                 } else {
                     com.javamaster.model.addAttribute("autorization","true");
                     //com.javamaster.model.addAttribute("role","admin");
-                    return "user";
+                    return "appUser";
                 }*/
             }
         } catch (Throwable throwable) {

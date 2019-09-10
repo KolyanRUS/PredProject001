@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <form action="/start" method="post">
+    <form action="/login" method="post">
         <p><small>Login</small>
             <input type="text" name="login" value="" size="5" />
         </p>

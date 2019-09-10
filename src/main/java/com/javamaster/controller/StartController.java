@@ -1,7 +1,8 @@
 package com.javamaster.controller;
 
+import com.javamaster.model.AppUser;
+import com.javamaster.model.UserRole;
 import com.javamaster.service.UserServiceImple;
-import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +23,18 @@ public class StartController {
     private UserServiceImple usi;
 
 
+    @RequestMapping(value="/user", method=RequestMethod.POST)
+    public String getAdminPagePost() throws SQLException {
+        return "user";
+    }
+
+
+
     @RequestMapping(value="/admin", method=RequestMethod.GET)
     public String getAdminPageGet(Model model) throws SQLException {
-        List<User> userList = usi.getListUsers();
-        userList = usi.getListUsers();
-        model.addAttribute("users", userList);
+        List<AppUser> appUserList = usi.getListUsers();
+        appUserList = usi.getListUsers();
+        model.addAttribute("users", appUserList);
         return "admin";
     }
     @RequestMapping(value="/admin", method=RequestMethod.POST)
@@ -56,8 +64,8 @@ public class StartController {
         return "createuser";
     }
     @RequestMapping(value="/createuser", method=RequestMethod.POST)
-    public String getCreateuserPagePost(Model model, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, HttpServletResponse resp) throws SQLException {
-        usi.insertUser(name,password,login);
+    public String getCreateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, HttpServletResponse resp) throws SQLException {
+        usi.insertUser(role,name,password,login);
         return "redirect:/admin";
     }
 
@@ -69,30 +77,61 @@ public class StartController {
 
     @RequestMapping(value="/updateuser", method=RequestMethod.GET)
     public String getUpdateuserPageGet(Model model, @RequestParam(value="user_id") String user_id) {
-        int id = -1;
+        int id;
+        String role = null;
         try {
             id = Integer.parseInt(user_id);
-            User us = usi.get(id);
+            AppUser us = usi.get(id);
+            role = ((UserRole)(us.userRole.toArray()[0])).getRole();
             model.addAttribute("us",us);
         } catch(Throwable throwable) {
-            System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id+"::id::"+id);
+            System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id);
         }
 
         List<String[]> rolesList = new ArrayList<String[]>();
-        rolesList.add(new String[]{"admin","user"});
+        if(role.equals("admin")) {
+            rolesList.add(new String[]{"admin","user"});
+        } else if(role.equals("user")) {
+            rolesList.add(new String[]{"user","admin"});
+        }
         model.addAttribute("rolesList",rolesList);
         return "updateuser";
     }
     @RequestMapping(value="/updateuser", method=RequestMethod.POST)
-    public String getUpdateuserPagePost(Model model, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, @RequestParam(value="id") String id, HttpServletResponse resp) throws SQLException {
-        int idd = -1;
+    public String getUpdateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, @RequestParam(value="id") String id) throws SQLException {
+        int idd;
         try {
             idd = Integer.parseInt(id);
-            usi.updateId(idd,name,login,password);
+            usi.updateId(idd,role,name,login,password);
             return "redirect:/admin";
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"idd\"))::"+throwable.toString());
         }
         return null;
     }
+
+    @RequestMapping(value="/login", method=RequestMethod.GET)
+    public String getUpdateuserPageGet() {
+        return "login";
+    }
+    /*@RequestMapping(value="/login", method=RequestMethod.POST)
+    public String getUpdateuserPagePost(Model model, @RequestParam(value="login") String login, @RequestParam(value="password") String password, HttpServletResponse resp) throws SQLException {
+        try {
+            AppUser us = usi.getUser(login);
+            if(us.getPassword().equals(password)) {
+                if(((UserRole)(us.userRole.toArray()[0])).getRole().equals("admin")) {
+                    model.addAttribute("autorization", "true");
+                    model.addAttribute("role", "admin");//rights = true;
+                    return "redirect:/admin";
+                } else {
+                    model.addAttribute("autorization", "true");
+                    model.addAttribute("role", "user");//rights = false;
+                    return "redirect:/user";
+                }
+            }
+        } catch (Throwable throwable) {
+            System.out.println("ERROR::Start_doPost()::"+throwable.toString());
+        }
+        return "login";
+    }*/
 }
