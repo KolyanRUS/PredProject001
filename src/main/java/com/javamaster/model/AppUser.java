@@ -20,8 +20,8 @@ public class AppUser implements UserDetails {
     private String login;
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
-    @OneToMany(fetch=FetchType.EAGER, mappedBy="appUser")
-    public Set<UserRole> userRole;
+    @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL/*объекты коллекции сразу загружаются в память*//*, mappedBy="appUser"*/)
+    private Set<UserRole> userRole;
 
     public String getPassword() {
         return password;
@@ -59,9 +59,6 @@ public class AppUser implements UserDetails {
         this.login = login;
         UserRole userRole = new UserRole();
         userRole.setRole(role);
-        userRole.setUserRoleId(integer);
-        userRole.setAppUser(this);
-        this.userRole.add(userRole);
     }
 
     public AppUser() {

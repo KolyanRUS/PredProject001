@@ -10,9 +10,6 @@ public class UserRole implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_role_id", nullable = false, unique = true)
     private Integer userRoleId;
-    @ManyToOne
-    @JoinColumn(name="username" ,nullable = false)
-    private AppUser appUser;
     @Column(length = 45, nullable = false)
     private String role;
 
@@ -29,19 +26,6 @@ public class UserRole implements GrantedAuthority {
      */
     public void setUserRoleId(Integer userRoleId) {
         this.userRoleId = userRoleId;
-    }
-    /**
-     * @return the appUser
-     */
-    public AppUser getAppUser() {
-        return appUser;
-    }
-
-    /**
-     * @param appUser the appUser to set
-     */
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
     }
 
     /**

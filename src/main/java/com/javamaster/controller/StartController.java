@@ -82,7 +82,7 @@ public class StartController {
         try {
             id = Integer.parseInt(user_id);
             AppUser us = usi.get(id);
-            role = ((UserRole)(us.userRole.toArray()[0])).getRole();
+            role = ((UserRole)(us.getAuthorities().toArray()[0])).getRole();
             model.addAttribute("us",us);
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id);

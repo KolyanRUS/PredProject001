@@ -2,12 +2,14 @@ package com.javamaster.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.persistence.EntityManager;
+
 public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
         // TODO Auto-generated method stub
-        return new Class[]{RootConfig.class};
+        return new Class[]{WebConfig.class, EntityManagerConfig.class};
     }
 
     @Override

@@ -17,25 +17,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailsService")
     UserDetailsService userDetailsService;
-    /*@Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth){
-        try {
-            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.springframework.security.config.annotation.web.configuration.
-     * WebSecurityConfigurerAdapter
-     * #configure(org.springframework.security.config
-     * .annotation.web.builders.HttpSecurity)
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
