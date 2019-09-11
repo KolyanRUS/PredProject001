@@ -1,6 +1,6 @@
 package com.javamaster.controller;
 
-import com.javamaster.model.AppUser;
+import com.javamaster.model.User;
 import com.javamaster.model.UserRole;
 import com.javamaster.service.UserServiceImple;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,9 @@ public class StartController {
 
     @RequestMapping(value="/admin", method=RequestMethod.GET)
     public String getAdminPageGet(Model model) throws SQLException {
-        List<AppUser> appUserList = usi.getListUsers();
-        appUserList = usi.getListUsers();
-        model.addAttribute("users", appUserList);
+        List<User> userList = usi.getListUsers();
+        userList = usi.getListUsers();
+        model.addAttribute("users", userList);
         return "admin";
     }
     @RequestMapping(value="/admin", method=RequestMethod.POST)
@@ -81,7 +81,7 @@ public class StartController {
         String role = null;
         try {
             id = Integer.parseInt(user_id);
-            AppUser us = usi.get(id);
+            User us = usi.get(id);
             role = ((UserRole)(us.getAuthorities().toArray()[0])).getRole();
             model.addAttribute("us",us);
         } catch(Throwable throwable) {
@@ -117,7 +117,7 @@ public class StartController {
     /*@RequestMapping(value="/login", method=RequestMethod.POST)
     public String getUpdateuserPagePost(Model model, @RequestParam(value="login") String login, @RequestParam(value="password") String password, HttpServletResponse resp) throws SQLException {
         try {
-            AppUser us = usi.getUser(login);
+            User us = usi.getUser(login);
             if(us.getPassword().equals(password)) {
                 if(((UserRole)(us.userRole.toArray()[0])).getRole().equals("admin")) {
                     model.addAttribute("autorization", "true");

@@ -1,6 +1,6 @@
 package com.javamaster.dao;
 
-import com.javamaster.model.AppUser;
+import com.javamaster.model.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -24,9 +24,9 @@ public interface UserDAO {
 
     long getUserId(String login) throws SQLException;
 
-    List<AppUser> getListUsers() throws SQLException;
+    List<User> getListUsers() throws SQLException;
 
-    AppUser getUser(String login) throws SQLException;
+    User getUser(String login) throws SQLException;
 
-    AppUser get(long id) throws SQLException;
+    User get(long id) throws SQLException;
 }

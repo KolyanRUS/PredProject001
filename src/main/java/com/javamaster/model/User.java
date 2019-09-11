@@ -2,13 +2,12 @@ package com.javamaster.model;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
-@NamedQuery(name="AppUser.findByUserName", query="SELECT u from AppUser u where LOWER(u.username) like LOWER(:username)")
-public class AppUser implements UserDetails {
+//@NamedQuery(name="User.findByUserName", query="SELECT u from User u where LOWER(u.username) like LOWER(:username)")
+public class User implements UserDetails {
     @Id
     @Column(name = "id")
     private long id;
@@ -51,7 +50,7 @@ public class AppUser implements UserDetails {
         return enabled;
     }
 
-    public AppUser(long id, String name, String password, String login, String role) {
+    public User(long id, String name, String password, String login, String role) {
         this.id = id;
         Integer integer = (int)id;
         this.name = name;
@@ -61,7 +60,7 @@ public class AppUser implements UserDetails {
         userRole.setRole(role);
     }
 
-    public AppUser() {
+    public User() {
         //
     }
 

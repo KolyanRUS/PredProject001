@@ -1,6 +1,6 @@
 package com.javamaster.service;
 import com.javamaster.dao.*;
-import com.javamaster.model.AppUser;
+import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import java.sql.SQLException;
@@ -27,13 +27,13 @@ public class UserServiceImple implements UserService {
     public long getUserId(String login) throws SQLException {
         return dao.getUserId(login);
     }
-    public List<AppUser> getListUsers() throws SQLException {
+    public List<User> getListUsers() throws SQLException {
         return dao.getListUsers();
     }
-    public AppUser getUser(String login) throws  SQLException {
+    public User getUser(String login) throws  SQLException {
         return dao.getUser(login);
     }
-    public AppUser get(long id) throws SQLException {
+    public User get(long id) throws SQLException {
         return dao.get(id);
     }
 }
