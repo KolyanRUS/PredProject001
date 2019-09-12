@@ -68,10 +68,11 @@ public class JpaUserDaoImpl implements UserDAO/*, UserRepo */{
         q.setParameter("loginn", login);
         return (User) q.getSingleResult();
     }
-    /*public User findByUserName(@Param("username") String username) {
-        String hql = "FROM AppUser WHERE login = :loginn";
+    /*public User getUserByName(String name) throws SQLException {
+        //String hql = "SELECT e FROM User e WHERE e.getLogin() = :"+login;
+        String hql = "FROM AppUser WHERE name = :nname";
         Query q = entityManager.createQuery(hql);
-        q.setParameter("loginn", username);
+        q.setParameter("nname", name);
         return (User) q.getSingleResult();
     }*/
     public User get(long id) throws SQLException {

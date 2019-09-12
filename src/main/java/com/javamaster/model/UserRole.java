@@ -9,14 +9,14 @@ public class UserRole implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_role_id", nullable = false, unique = true)
-    private Integer userRoleId;
+    private long userRoleId;
     @Column(length = 45, nullable = false)
     private String role;
 
     /**
      * @return the userRoleId
      */
-    public Integer getUserRoleId() {
+    public long getUserRoleId() {
         return userRoleId;
     }
 

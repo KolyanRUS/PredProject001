@@ -13,5 +13,6 @@ interface UserService {
 	long getUserId(String login) throws SQLException;
 	List<User> getListUsers() throws SQLException;
 	User getUser(String login) throws SQLException;
+	//User getUserByName(String login) throws SQLException;
 	User get(long id) throws SQLException;
 }

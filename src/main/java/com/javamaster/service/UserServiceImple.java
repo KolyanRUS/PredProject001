@@ -33,6 +33,9 @@ public class UserServiceImple implements UserService {
     public User getUser(String login) throws  SQLException {
         return dao.getUser(login);
     }
+    /*public User getUserByName(String name) throws  SQLException {
+        return dao.getUser(name);
+    }*/
     public User get(long id) throws SQLException {
         return dao.get(id);
     }

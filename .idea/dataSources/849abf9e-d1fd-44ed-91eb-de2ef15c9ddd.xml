@@ -912,40 +912,58 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="229" parent="6" name="users"/>
-    <column id="230" parent="229" name="id">
+    <table id="229" parent="6" name="user_roles"/>
+    <table id="230" parent="6" name="users"/>
+    <column id="231" parent="229" name="userRoleId">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="231" parent="229" name="login">
+    <column id="232" parent="229" name="role">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="232" parent="229" name="name">
+    <key id="233" parent="229" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>userRoleId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="234" parent="230" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="235" parent="230" name="login">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="236" parent="230" name="name">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="233" parent="229" name="password">
+    <column id="237" parent="230" name="password">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="234" parent="229" name="UK_ow0gan20590jrb00upg3va2fn">
+    <index id="238" parent="230" name="UK_ow0gan20590jrb00upg3va2fn">
       <ColNames>login</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="235" parent="229" name="PRIMARY">
+    <key id="239" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="236" parent="229" name="UK_ow0gan20590jrb00upg3va2fn">
+    <key id="240" parent="230" name="UK_ow0gan20590jrb00upg3va2fn">
       <ColNames>login</ColNames>
       <UnderlyingIndexName>UK_ow0gan20590jrb00upg3va2fn</UnderlyingIndexName>
     </key>

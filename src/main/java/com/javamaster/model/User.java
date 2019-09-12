@@ -19,7 +19,9 @@ public class User implements UserDetails {
     private String login;
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
-    @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL/*объекты коллекции сразу загружаются в память*//*, mappedBy="appUser"*/)
+    //Каскадирование позволяет сказать JPA «сделай с владеемыми объектами класса тоже самое, что ты делаешь с владельцем».
+    //То есть, когда мы удаляем гражданина из базы, JPA самостоятельно увидит, что гражданин владеет паспорт и удалит вначале паспорт, потом гражданина.
+    @ManyToMany(fetch=FetchType.EAGER/*объекты коллекции сразу загружаются в память*/,cascade=CascadeType.ALL/*, mappedBy="appUser"*/)
     private Set<UserRole> userRole;
 
     public String getPassword() {
