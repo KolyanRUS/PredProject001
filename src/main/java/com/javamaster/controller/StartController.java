@@ -4,11 +4,16 @@ import com.javamaster.model.User;
 import com.javamaster.model.UserRole;
 import com.javamaster.service.UserServiceImple;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
@@ -114,18 +119,16 @@ public class StartController {
     public String getUpdateuserPageGet() {
         return "login";
     }
-    /*@RequestMapping(value="/login", method=RequestMethod.POST)
+    /*@RequestMapping(value={"/", "/login"}, method=RequestMethod.POST)
     public String getUpdateuserPagePost(Model model, @RequestParam(value="login") String login, @RequestParam(value="password") String password, HttpServletResponse resp) throws SQLException {
         try {
             User us = usi.getUser(login);
             if(us.getPassword().equals(password)) {
-                if(((UserRole)(us.userRole.toArray()[0])).getRole().equals("admin")) {
-                    model.addAttribute("autorization", "true");
-                    model.addAttribute("role", "admin");//rights = true;
+                if(((UserRole)(us.getAuthorities().toArray()[0])).getRole().equals("admin")) {
+                    //model.addAttribute("autorization", "true");
+                    //model.addAttribute("role", "admin");//rights = true;
                     return "redirect:/admin";
                 } else {
-                    model.addAttribute("autorization", "true");
-                    model.addAttribute("role", "user");//rights = false;
                     return "redirect:/user";
                 }
             }
@@ -134,4 +137,30 @@ public class StartController {
         }
         return "login";
     }*/
+
+
+
+
+
+    // for 403 access denied page
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public ModelAndView accesssDenied() {
+
+        ModelAndView model = new ModelAndView();
+
+        // check if user is login
+        Authentication auth = SecurityContextHolder.getContext()
+                .getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            System.out.println(userDetail);
+
+            model.addObject("username", userDetail.getUsername());
+
+        }
+
+        model.setViewName("403");
+        return model;
+
+    }
 }

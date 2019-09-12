@@ -22,12 +22,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login")/*.failureUrl("/start?error")*/
                 .usernameParameter("login").passwordParameter("password")
-                .and().logout().logoutSuccessUrl("/login?logout").and().csrf()
+                .and().logout().permitAll()//logoutSuccessUrl("/login?logout").and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/403")
                 //intercepted urls
                 .and().authorizeRequests()
-                .antMatchers("/admin","/createuser","/updateuser")
-                .access("hasRole('admin')");
+                //.antMatchers("/admin","/createuser","/updateuser")
+                //.access("hasRole('admin')");
+                .antMatchers("/admin")
+                .hasRole("admin")
+                .antMatchers("/createuser")
+                .hasRole("admin")
+                .antMatchers("/updateuser")
+                .hasRole("admin");
 
     }
 }
