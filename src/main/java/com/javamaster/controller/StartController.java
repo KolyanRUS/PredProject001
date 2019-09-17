@@ -1,7 +1,7 @@
 package com.javamaster.controller;
 
 import com.javamaster.model.User;
-import com.javamaster.model.UserRole;
+import com.javamaster.model.Role;
 import com.javamaster.service.UserServiceImple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -28,7 +28,7 @@ public class StartController {
     private UserServiceImple usi;
 
 
-    @RequestMapping(value="/user", method=RequestMethod.POST)
+    @RequestMapping(value="/user", method=RequestMethod.GET)
     public String getAdminPagePost() throws SQLException {
         return "user";
     }
@@ -87,7 +87,7 @@ public class StartController {
         try {
             id = Integer.parseInt(user_id);
             User us = usi.get(id);
-            role = ((UserRole)(us.getAuthorities().toArray()[0])).getRole();
+            role = ((Role)(us.getAuthorities().toArray()[0])).getRole();
             model.addAttribute("us",us);
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id);
@@ -124,7 +124,7 @@ public class StartController {
         try {
             User us = usi.getUser(login);
             if(us.getPassword().equals(password)) {
-                if(((UserRole)(us.getAuthorities().toArray()[0])).getRole().equals("admin")) {
+                if(((Role)(us.getAuthorities().toArray()[0])).getRole().equals("admin")) {
                     //model.addAttribute("autorization", "true");
                     //model.addAttribute("role", "admin");//rights = true;
                     return "redirect:/admin";

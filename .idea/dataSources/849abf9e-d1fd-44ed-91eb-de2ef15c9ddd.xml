@@ -912,60 +912,91 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="229" parent="6" name="user_roles"/>
-    <table id="230" parent="6" name="users"/>
-    <column id="231" parent="229" name="userRoleId">
+    <table id="229" parent="6" name="roles"/>
+    <table id="230" parent="6" name="user_roles"/>
+    <table id="231" parent="6" name="users"/>
+    <column id="232" parent="229" name="id_role">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="232" parent="229" name="role">
+    <column id="233" parent="229" name="role">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="233" parent="229" name="PRIMARY">
+    <key id="234" parent="229" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>userRoleId</ColNames>
+      <ColNames>id_role</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="234" parent="230" name="id">
+    <column id="235" parent="230" name="user_id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="236" parent="230" name="role_id">
+      <Position>2</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="237" parent="230" name="user_id">
+      <ColNames>user_id
+role_id</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <index id="238" parent="230" name="role_id">
+      <ColNames>role_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="239" parent="230" name="user_id">
+      <ColNames>user_id
+role_id</ColNames>
+      <UnderlyingIndexName>user_id</UnderlyingIndexName>
+    </key>
+    <foreign-key id="240" parent="230" name="user_roles_ibfk_1">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>users</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id_user</RefColNames>
+    </foreign-key>
+    <foreign-key id="241" parent="230" name="user_roles_ibfk_2">
+      <ColNames>role_id</ColNames>
+      <RefSchemaName>users</RefSchemaName>
+      <RefTableName>roles</RefTableName>
+      <RefColNames>id_role</RefColNames>
+    </foreign-key>
+    <column id="242" parent="231" name="id_user">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="235" parent="230" name="login">
+    <column id="243" parent="231" name="login">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="236" parent="230" name="name">
+    <column id="244" parent="231" name="name">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="237" parent="230" name="password">
+    <column id="245" parent="231" name="password">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="238" parent="230" name="UK_ow0gan20590jrb00upg3va2fn">
-      <ColNames>login</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <key id="239" parent="230" name="PRIMARY">
+    <key id="246" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
+      <ColNames>id_user</ColNames>
       <Primary>1</Primary>
-    </key>
-    <key id="240" parent="230" name="UK_ow0gan20590jrb00upg3va2fn">
-      <ColNames>login</ColNames>
-      <UnderlyingIndexName>UK_ow0gan20590jrb00upg3va2fn</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>
