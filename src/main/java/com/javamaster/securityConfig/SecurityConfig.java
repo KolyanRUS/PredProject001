@@ -21,7 +21,7 @@ import java.sql.SQLException;
 @ComponentScan("com.javamaster.*")
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         dataSource.setPassword("admin");
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("SELECT name, password, 'true' FROM users WHERE name=?")
-                //.authoritiesByUsernameQuery("SELECT U.name"+/*", A.AUTHORITY"+*/"\n" +
+                //.authoritiesByUsernameQuery("SELECT U.name"+/*", A.AUTHORITY"+*/  /*"\n" +
                         //"        \t FROM AUTHORITIES A, USER U WHERE U.name = A.name AND U.name = ?");
                 .authoritiesByUsernameQuery("SELECT id_role, role"+"\n" +
                         "FROM roles WHERE id_role in "+
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                         //+"        \t FROM roles A, users U WHERE .id_role=.role_id AND U.name = A.name AND U.name = ?");//
-    }
+    }*/
     @Autowired
     @Qualifier("userDetailsService")
     UserDetailsService userDetailsService;
