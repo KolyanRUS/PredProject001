@@ -13,7 +13,6 @@
         <springframework.version>4.0.6.RELEASE</springframework.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
         <mysql.connector.version>5.1.31</mysql.connector.version>
-        <dbunit.version>2.2</dbunit.version>
     </properties>
 
     <build>
@@ -61,11 +60,11 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${springframework.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${springframework.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -100,19 +99,6 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        <!-- Testing dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>${dbunit.version}</version>
-            <scope>test</scope>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -142,27 +128,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>4.0.4.RELEASE</version>
-        </dependency>
-        <!--Provides Spring Security’s JSP tag implementations.-->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>4.0.4.RELEASE</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <!--Common Java Annotations.
-       For this app it includes security annotation: @RolesAllowed; @DenyAll, @RunAs, @PermitAll
-        -->
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>jsr250-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

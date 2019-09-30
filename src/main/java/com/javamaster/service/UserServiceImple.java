@@ -1,12 +1,24 @@
 package com.javamaster.service;
 import com.javamaster.dao.*;
+import com.javamaster.model.Role;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
+
 @Service("userService")
 public class UserServiceImple implements UserService {
+    /*static {
+        JpaUserDaoImpl jpaDao = new JpaUserDaoImpl();
+        try {
+            jpaDao.insertUser(false,"admin","admin","admin","admin");
+            jpaDao.insertUser(false,"user","user","user","user");
+        } catch (Throwable throwable) {
+            System.out.println("|||ERROR|||::::::"+throwable.toString());
+        }
+    }*/
     private UserDAO dao;
     @Autowired
     public UserServiceImple(UserDAO dao) {
@@ -21,8 +33,14 @@ public class UserServiceImple implements UserService {
     public void updateId(int id, String role, String name, String login, String password) throws SQLException {
         dao.updateId(id,role,name,login,password);
     }
+    public void updateId(int id, Set<Role> userRole, String name, String login, String password) throws SQLException {
+        dao.updateId(id,userRole,name,login,password);
+    }
     public void insertUser(String role, String name, String password, String login) throws SQLException {
-        dao.insertUser(role,name,password,login);
+        dao.insertUser(false,role,name,password,login);
+    }
+    public void insertUser(Set<Role> userRole, String name, String password, String login) throws SQLException {
+        dao.insertUser(false,userRole,name,password,login);
     }
     public long getUserId(String login) throws SQLException {
         return dao.getUserId(login);

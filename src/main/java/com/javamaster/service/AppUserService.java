@@ -1,7 +1,6 @@
 package com.javamaster.service;
 import com.javamaster.dao.JpaUserDaoImpl;
 import com.javamaster.dao.UserDAO;
-import com.javamaster.dao.UserRepo;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

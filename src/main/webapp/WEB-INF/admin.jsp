@@ -21,7 +21,7 @@
         <c:forEach var="user" items="${users}">
             <tr>
                 <td><c:out value="${user.getId()}" /></td>
-                <td><c:out value="${user.getName()}" /></td>
+                <td><c:out value="${user.getUsername()}" /></td>
                 <td><c:out value="${user.getLogin()}" /></td>
                 <td><c:out value="${user.getPassword()}" /></td>
                 <td>

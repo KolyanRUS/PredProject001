@@ -1,9 +1,11 @@
 package com.javamaster.dao;
 
+import com.javamaster.model.Role;
 import com.javamaster.model.User;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author v.chibrikov
@@ -20,7 +22,11 @@ public interface UserDAO {
 
     void updateId(int id, String role, String name, String login, String password) throws SQLException;
 
-    void insertUser(String role, String name, String password, String login) throws SQLException;
+    void updateId(int id, Set<Role> userRole, String name, String login, String password) throws SQLException;
+
+    void insertUser(boolean enabled, String role, String name, String password, String login) throws SQLException;
+
+    void insertUser(boolean enabled, Set<Role> userRole, String name, String password, String login) throws SQLException;
 
     long getUserId(String login) throws SQLException;
 

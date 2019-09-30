@@ -18,10 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
-@RequestMapping("/")
 public class StartController {
 
     @Autowired
@@ -66,11 +67,19 @@ public class StartController {
 
     @RequestMapping(value="/createuser", method=RequestMethod.GET)
     public String getCreateuserPageGet(Model model) {
+        /*List<String> rolesList = new ArrayList<>();
+        rolesList.add("admin");
+        rolesList.add("user");
+        model.addAttribute("rolesList", rolesList);*/
         return "createuser";
     }
     @RequestMapping(value="/createuser", method=RequestMethod.POST)
     public String getCreateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, HttpServletResponse resp) throws SQLException {
-        usi.insertUser(role,name,password,login);
+        Set<Role> userRole = new HashSet<>();
+        Role r = new Role();
+        r.setRole(role);
+        userRole.add(r);
+        usi.insertUser(userRole,name,password,login);
         return "redirect:/admin";
     }
 
@@ -92,7 +101,6 @@ public class StartController {
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id);
         }
-
         List<String[]> rolesList = new ArrayList<String[]>();
         if(role.equals("admin")) {
             rolesList.add(new String[]{"admin","user"});
@@ -105,9 +113,19 @@ public class StartController {
     @RequestMapping(value="/updateuser", method=RequestMethod.POST)
     public String getUpdateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, @RequestParam(value="id") String id) throws SQLException {
         int idd;
+        Set<Role> userRole = new HashSet<>();
+        Role r = new Role();
+        r.setRole(role);
+        if(role.equals("user")) {
+            r.setUserRoleId(2);
+        } else if(role.equals("admin")) {
+            r.setUserRoleId(1);
+        }
+        userRole.add(r);
         try {
             idd = Integer.parseInt(id);
-            usi.updateId(idd,role,name,login,password);
+            int ins = 0;
+            usi.updateId(idd,userRole,name,login,password);
             return "redirect:/admin";
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"idd\"))::"+throwable.toString());

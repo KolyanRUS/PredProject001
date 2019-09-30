@@ -24,7 +24,7 @@ public class User implements UserDetails {
     //То есть, когда мы удаляем гражданина из базы, JPA самостоятельно увидит, что гражданин владеет паспорт и удалит вначале паспорт, потом гражданина.
 
 
-    @ManyToMany(fetch=FetchType.EAGER/*объекты коллекции сразу загружаются в память*/,cascade=CascadeType.ALL)
+    @ManyToMany(fetch=FetchType.EAGER/*объекты коллекции сразу загружаются в память*/,cascade=CascadeType.REFRESH)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
@@ -45,6 +45,8 @@ public class User implements UserDetails {
         this.login = login;
     }
 
+    public void setUsername(String name) {this.name = name;}
+
     public String getUsername() {
         return name;
     }
@@ -57,15 +59,29 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    public User(long id, String name, String password, String login, String role) {
-        this.id_user = id;
-        Integer integer = (int)id;
+    public User(/*long id, */boolean enabled, String name, String password, String login, String role) {
+        //this.id_user = id;
         this.name = name;
+        this.enabled = enabled;
         this.password = password;
-        this.login = login;
+        this.login = login;//доставлять роль из базы и вставлять(в сервлете)
         Role userRole = new Role();
         userRole.setRole(role);
         this.roles.add(userRole);
+        //Set<Role> set = new HashSet<>();
+        //set.add(userRole);
+        //this.setUserRole(set);
+    }
+
+    public User(boolean enabled, String name, String password, String login, Set<Role> userRole) {
+        this.name = name;
+        this.enabled = enabled;
+        this.password = password;
+        this.login = login;//доставлять роль из базы и вставлять(в сервлете)
+        this.setUserRole(userRole);
+        //Role userRole = new Role();
+        //userRole.setRole(role);
+        //this.roles.add(userRole);
         //Set<Role> set = new HashSet<>();
         //set.add(userRole);
         //this.setUserRole(set);
@@ -104,6 +120,9 @@ public class User implements UserDetails {
      */
     public void setUserRole(Set<Role> userRole) {
         this.roles = userRole;
+    }
+    public void setId(long id) {
+        this.id_user = id;
     }
     public boolean isAccountNonExpired() {
         return true;

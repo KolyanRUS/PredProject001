@@ -22,7 +22,7 @@
             <input type="hidden" name="id" value="${us.getId()}"/>
         </p><%----%>
         <p><small>Name</small>
-            <input type="text" name="name" value="${us.getName()}" size="5" />
+            <input type="text" name="name" value="${us.getUsername()}" size="5" />
         </p>
         <p><small>Login</small>
             <input type="text" name="login" value="${us.getLogin()}" size="5" />
