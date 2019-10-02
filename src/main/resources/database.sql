@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
                                    name VARCHAR(255),
                                    password VARCHAR(255),
                                    PRIMARY KEY (id_user)
-) ENGINE InnoDB;
+) ENGINE InnoDB;1
 
 CREATE TABLE IF NOT EXISTS roles (
                                    id_role BIGINT AUTO_INCREMENT,
@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS user_roles (
 INSERT INTO roles VALUES (1,'admin');
 INSERT INTO roles VALUES (2,'user');
 
-INSERT INTO users VALUES (1, false, 'admin','admin','admin');
-INSERT INTO users VALUES (2, false, 'user','user','user');
+INSERT INTO users VALUES (1, true, 'admin','admin','admin');
+INSERT INTO users VALUES (2, true, 'user','user','user');
 
 INSERT INTO user_roles VALUES (1, 1);
 INSERT INTO user_roles VALUES (2, 2);

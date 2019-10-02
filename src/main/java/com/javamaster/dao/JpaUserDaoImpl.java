@@ -37,12 +37,18 @@ public class JpaUserDaoImpl implements UserDAO/*, UserRepo */{
         u.setUsername(name);
         u.setLogin(login);
         u.setPassword(password);
+        //Set<Role> usserRole = new HashSet<>();
+        //Role r = getRole(((Role)userRole.toArray()[0]).getRole());
+        //usserRole.add(r);
         u.setUserRole(userRole);
         int y = 0;
         u.setId(id);
-        entityManager.merge(u);
-        entityManager.flush();
+        updateUser(u);
+        //entityManager.flush();
         y = 2;
+    }
+    public void updateUser(User user) throws SQLException {
+        entityManager.merge(user);
     }
     public void updateId(int id, String role, String name, String login, String password) throws SQLException {
         String hql = "update User "
@@ -91,6 +97,17 @@ public class JpaUserDaoImpl implements UserDAO/*, UserRepo */{
             System.out.println("EEEEEEEERROR:::"+t.toString());
         }
         return (User) q.getSingleResult();
+    }
+    public Role getRole(String role) throws SQLException {
+        String hql = "FROM Role WHERE role = :rollle";
+        Query q = entityManager.createQuery(hql);
+        q.setParameter("rollle", role);
+        try {
+            q.getSingleResult();
+        } catch(Throwable t) {
+            System.out.println("EEEEEEEERROR_getRole:::"+t.toString());
+        }
+        return (Role) q.getSingleResult();
     }
     /*public User getUserByName(String name) throws SQLException {
         //String hql = "SELECT e FROM User e WHERE e.getLogin() = :"+login;

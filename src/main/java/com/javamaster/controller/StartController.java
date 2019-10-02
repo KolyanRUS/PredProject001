@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,6 +27,8 @@ import java.util.Set;
 
 @Controller
 public class StartController {
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private UserServiceImple usi;
@@ -114,18 +119,33 @@ public class StartController {
     public String getUpdateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, @RequestParam(value="id") String id) throws SQLException {
         int idd;
         Set<Role> userRole = new HashSet<>();
-        Role r = new Role();
+        /*Role r = new Role();
         r.setRole(role);
         if(role.equals("user")) {
             r.setUserRoleId(2);
         } else if(role.equals("admin")) {
             r.setUserRoleId(1);
-        }
-        userRole.add(r);
+        }*/
+
+
+        //Role ris = null;
+        String hql = "FROM Role WHERE role = :rollle";
+        Query q = entityManager.createQuery(hql);
+        q.setParameter("rollle", role);
+        Role ris = (Role) q.getSingleResult();
+
+
+        userRole.add(ris);
         try {
             idd = Integer.parseInt(id);
             int ins = 0;
+            //User u = new User(true,name,password,login,userRole);
+            //u.setId(idd);
             usi.updateId(idd,userRole,name,login,password);
+            ins = 6;
+            //entityManager.merge(u);
+            ins = 9;
+            //usi.updateId(idd,userRole,name,login,password);
             return "redirect:/admin";
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"idd\"))::"+throwable.toString());
