@@ -24,15 +24,17 @@ public interface UserDAO {
 
     void updateId(int id, Set<Role> userRole, String name, String login, String password) throws SQLException;
 
-    void insertUser(boolean enabled, String role, String name, String password, String login) throws SQLException;
-
-    void insertUser(boolean enabled, Set<Role> userRole, String name, String password, String login) throws SQLException;
+    void insertUser(String name, String password, Set<Role> roles) throws SQLException;
 
     long getUserId(String login) throws SQLException;
 
     List<User> getListUsers() throws SQLException;
 
     User getUser(String login) throws SQLException;
+
+    Role getRoleById(long id) throws SQLException;
+
+    void updateUser(User user) throws SQLException;
 
     //User getUserByName(String name) throws SQLException;
 

@@ -36,11 +36,11 @@ public class UserServiceImple implements UserService {
     public void updateId(int id, Set<Role> userRole, String name, String login, String password) throws SQLException {
         dao.updateId(id,userRole,name,login,password);
     }
-    public void insertUser(String role, String name, String password, String login) throws SQLException {
-        dao.insertUser(false,role,name,password,login);
+    public void insertUser(String name, String password, Set<Role> roles) throws SQLException {
+        dao.insertUser(name, password, roles);
     }
-    public void insertUser(Set<Role> userRole, String name, String password, String login) throws SQLException {
-        dao.insertUser(false,userRole,name,password,login);
+    public void updateUser(User user) throws SQLException {
+        dao.updateUser(user);
     }
     public long getUserId(String login) throws SQLException {
         return dao.getUserId(login);
@@ -51,10 +51,16 @@ public class UserServiceImple implements UserService {
     public User getUser(String login) throws  SQLException {
         return dao.getUser(login);
     }
+    public Role getRoleById(long id) throws  SQLException {
+        return dao.getRoleById(id);
+    }
     /*public User getUserByName(String name) throws  SQLException {
         return dao.getUser(name);
     }*/
     public User get(long id) throws SQLException {
         return dao.get(id);
+    }
+    public UserDAO getDao() {
+        return dao;
     }
 }

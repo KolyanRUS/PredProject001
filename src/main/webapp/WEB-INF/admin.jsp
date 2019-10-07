@@ -13,26 +13,24 @@
         <tr>
             <th>Id</th>
             <th>User_name</th>
-            <th>User_login</th>
             <th>User_password</th>
             <th>Button for removing</th>
             <th>Button for updating</th>
         </tr>
         <c:forEach var="user" items="${users}">
             <tr>
-                <td><c:out value="${user.getId()}" /></td>
-                <td><c:out value="${user.getUsername()}" /></td>
-                <td><c:out value="${user.getLogin()}" /></td>
+                <td><c:out value="${user.getId_user()}" /></td>
+                <td><c:out value="${user.getName()}" /></td>
                 <td><c:out value="${user.getPassword()}" /></td>
                 <td>
                     <form action="/admin" method="post">
-                        <c:set var="userid" scope="application" value="${user.getId()}"/>
-                        <input type="submit" name="ButtonName" value="${user.getId()}"/>
+                        <c:set var="userid" scope="application" value="${user.getId_user()}"/>
+                        <input type="submit" name="ButtonName" value="${user.getId_user()}"/>
                     </form>
                 </td>
                 <td>
                     <form action="/updateuser" method="get">
-                        <input type="hidden" name="user_id" value="${user.getId()}"/>
+                        <input type="hidden" name="user_id" value="${user.getId_user()}"/>
                         <input type="submit" name="ButtonName" value="Update User"/>
                     </form>
                 </td>

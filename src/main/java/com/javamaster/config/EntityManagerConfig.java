@@ -32,7 +32,7 @@ public class EntityManagerConfig {
         emFactory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         emFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto","create-drop");
+        properties.put("hibernate.hbm2ddl.auto","update-drop");
         properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
         emFactory.setJpaProperties(properties);

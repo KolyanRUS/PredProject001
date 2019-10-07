@@ -1,5 +1,6 @@
 package com.javamaster.controller;
 
+import com.javamaster.dao.JpaUserDaoImpl;
 import com.javamaster.model.User;
 import com.javamaster.model.Role;
 import com.javamaster.service.UserServiceImple;
@@ -20,10 +21,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class StartController {
@@ -84,7 +82,7 @@ public class StartController {
         Role r = new Role();
         r.setRole(role);
         userRole.add(r);
-        usi.insertUser(userRole,name,password,login);
+        usi.insertUser(name,password,userRole);
         return "redirect:/admin";
     }
 
@@ -94,26 +92,26 @@ public class StartController {
 
 
 
-    @RequestMapping(value="/updateuser", method=RequestMethod.GET)
-    public String getUpdateuserPageGet(Model model, @RequestParam(value="user_id") String user_id) {
-        int id;
-        String role = null;
+    @RequestMapping(value = "/updateuser", method = RequestMethod.GET)
+    public String getUpdateuserPagePost() {
+        Set<Role> roleSet = null;
         try {
-            id = Integer.parseInt(user_id);
-            User us = usi.get(id);
-            role = ((Role)(us.getAuthorities().toArray()[0])).getRole();
-            model.addAttribute("us",us);
-        } catch(Throwable throwable) {
-            System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id);
+            roleSet = Collections.singleton((usi.getDao()).getRoleById(1));
+        } catch (Throwable throwable) {
+            System.out.println("ERROR::StartController_getUpdateuserPagePost_rolesSet=::Collections.singleton(((JpaUserDaoImpl)usi.getDao()).getRoleById(1L))::"+throwable.toString());
         }
-        List<String[]> rolesList = new ArrayList<String[]>();
-        if(role.equals("admin")) {
-            rolesList.add(new String[]{"admin","user"});
-        } else if(role.equals("user")) {
-            rolesList.add(new String[]{"user","admin"});
+        User user = new User();
+        user.setId_user(1);
+        user.setName("Ivan");
+        user.setPassword("333");
+        user.setRoles(roleSet);
+        int y = 0;
+        try {
+            usi.getDao().updateUser(user);
+        } catch (Throwable throwable) {
+            System.out.println("ERROR::StartController_getUpdateuserPagePost_((JpaUserDaoImpl)usi.getDao()).updateUser(user)::;"+throwable.toString());
         }
-        model.addAttribute("rolesList",rolesList);
-        return "updateuser";
+        return "redirect:/admin";
     }
     @RequestMapping(value="/updateuser", method=RequestMethod.POST)
     public String getUpdateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, @RequestParam(value="id") String id) throws SQLException {
@@ -142,7 +140,6 @@ public class StartController {
             //User u = new User(true,name,password,login,userRole);
             //u.setId(idd);
             usi.updateId(idd,userRole,name,login,password);
-            ins = 6;
             //entityManager.merge(u);
             ins = 9;
             //usi.updateId(idd,userRole,name,login,password);
