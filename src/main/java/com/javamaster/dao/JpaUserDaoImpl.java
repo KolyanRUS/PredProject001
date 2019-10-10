@@ -28,59 +28,22 @@ public class JpaUserDaoImpl implements UserDAO/*, UserRepo */{
         }
     }
     public void deleteId(long id) throws SQLException {
-        Query q = entityManager.createQuery("DELETE User WHERE id = :idd");
-        q.setParameter("idd", id);
+        Query q = entityManager.createQuery("DELETE User WHERE id = :id");
+        q.setParameter("id", id);
         q.executeUpdate();
     }
-    public void updateId(int id, Set<Role> userRole, String name, String login, String password) throws SQLException {
-        User u = get(id);//new User(false,name,password,login,userRole);
-        u.setName(name);
-        u.setPassword(password);
-        //Set<Role> usserRole = new HashSet<>();
-        //Role r = getRole(((Role)userRole.toArray()[0]).getRole());
-        //usserRole.add(r);
-        u.setRoles(userRole);
-        int y = 0;
-        u.setId_user(id);
-        updateUser(u);
-        //entityManager.flush();
-        y = 2;
-    }
     public void updateUser(User user) throws SQLException {
-        /*String hql = "update User "
-                + "SET roles = :role,"
-                +   " name = :name"
-                +   ", password = :password"
-                +  " where id_user = :idParam";
-        Query query =  entityManager.createQuery(hql);
-        query.setParameter("idParam"  , user.getId_user());
-        query.setParameter("role"     , user.getAuthorities());
-        query.setParameter("name"     , user.getUsername());
-        query.setParameter("password", user.getPassword());
-        query.executeUpdate();*/
         entityManager.merge(user);
-        //userPersist(user);        entityManager.merge(user);
-        entityManager.flush();
     }
     public void userPersist(User user) {
         entityManager.persist(user);
     }
-    public void updateId(int id, String role, String name, String login, String password) throws SQLException {
-        String hql = "update User "
-                + "SET roles = :role,"
-                +   " name = :name"
-                +   ", password = :password"
-                +  " where id = :idParam";
-        Query query =  entityManager.createQuery(hql);
-        query.setParameter("idParam"  , (long)id);
-        query.setParameter("role"     , role);
-        query.setParameter("name"     , name);
-        query.setParameter("password", password);
-        query.executeUpdate();
-    }
     public void insertUser(String name, String password, Set<Role> roles) throws SQLException {
-        int ti = 0;
         entityManager.persist(new User(name,password,roles));
+    }
+    @Override
+    public void saveUser(User user) {
+        entityManager.persist(user);
     }
     public long getUserId(String login) throws SQLException {
         User us = getUser(login);
@@ -96,51 +59,22 @@ public class JpaUserDaoImpl implements UserDAO/*, UserRepo */{
         return null;
     }
     public User getUser(String login) throws SQLException {
-        //String hql = "SELECT e FROM User e WHERE e.getLogin() = :"+login;
-        String hql = "FROM User WHERE login = :loginn";
-        Query q = entityManager.createQuery(hql);
-        q.setParameter("loginn", login);
-        try {
-            //javax.persistence.PersistenceException: org.hibernate.exception.SQLGrammarException: could not extract ResultSetL
-            q.getSingleResult();
-        } catch(Throwable t) {
-            System.out.println("EEEEEEEERROR:::"+t.toString());
-        }
-        return (User) q.getSingleResult();
+        return (User) entityManager.createQuery("FROM User WHERE login = :login")
+                .setParameter("login", login).getSingleResult();
     }
     public Role getRole(String role) throws SQLException {
-        String hql = "FROM Role WHERE role = :rollle";
-        Query q = entityManager.createQuery(hql);
-        q.setParameter("rollle", role);
-        try {
-            q.getSingleResult();
-        } catch(Throwable t) {
-            System.out.println("EEEEEEEERROR_getRole:::"+t.toString());
-        }
-        return (Role) q.getSingleResult();
+        return (Role) entityManager.createQuery("FROM Role WHERE role = :role")
+                .setParameter("role", role).getSingleResult();
     }
     public Role getRoleById(long id) throws SQLException {
-        String hql = "FROM Role WHERE id_role = :idd";
-        Query q = entityManager.createQuery(hql);
-        q.setParameter("idd", id);
-        try {
-            q.getSingleResult();
-        } catch(Throwable t) {
-            System.out.println("EEEEEEEERROR_getRoleById:::"+t.toString());
-        }
-        return (Role) q.getSingleResult();
+        return (Role) entityManager.createQuery("FROM Role WHERE id = :id")
+                .setParameter("id", id).getSingleResult();
     }
-    /*public User getUserByName(String name) throws SQLException {
-        //String hql = "SELECT e FROM User e WHERE e.getLogin() = :"+login;
-        String hql = "FROM AppUser WHERE name = :nname";
-        Query q = entityManager.createQuery(hql);
-        q.setParameter("nname", name);
-        return (User) q.getSingleResult();
-    }*/
     public User get(long id) throws SQLException {
-        String hql = "FROM User WHERE id = :idd";
-        Query q = entityManager.createQuery(hql);
-        q.setParameter("idd",id);
-        return (User) q.getSingleResult();
+        return (User) entityManager.createQuery("FROM User WHERE id = :id")
+                .setParameter("id", id).getSingleResult();
+    }
+    public void saveRole(Role role) {
+        entityManager.persist(role);
     }
 }

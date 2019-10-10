@@ -30,14 +30,11 @@ public class UserServiceImple implements UserService {
     public void deleteId(int id) throws SQLException {
         dao.deleteId(id);
     }
-    public void updateId(int id, String role, String name, String login, String password) throws SQLException {
-        dao.updateId(id,role,name,login,password);
-    }
-    public void updateId(int id, Set<Role> userRole, String name, String login, String password) throws SQLException {
-        dao.updateId(id,userRole,name,login,password);
-    }
     public void insertUser(String name, String password, Set<Role> roles) throws SQLException {
         dao.insertUser(name, password, roles);
+    }
+    public void saveUser(User user) throws SQLException {
+        dao.saveUser(user);
     }
     public void updateUser(User user) throws SQLException {
         dao.updateUser(user);

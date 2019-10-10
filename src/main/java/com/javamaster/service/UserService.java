@@ -10,7 +10,6 @@ import java.util.Set;
 interface UserService {
 	void cleanTable() throws SQLException;
 	void deleteId(int id) throws SQLException;
-	void updateId(int id, String role, String name, String login, String password) throws SQLException;
 	void insertUser(String name, String password, Set<Role> roles) throws SQLException;
 	long getUserId(String login) throws SQLException;
 	List<User> getListUsers() throws SQLException;

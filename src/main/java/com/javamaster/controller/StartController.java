@@ -70,19 +70,18 @@ public class StartController {
 
     @RequestMapping(value="/createuser", method=RequestMethod.GET)
     public String getCreateuserPageGet(Model model) {
-        /*List<String> rolesList = new ArrayList<>();
-        rolesList.add("admin");
-        rolesList.add("user");
-        model.addAttribute("rolesList", rolesList);*/
         return "createuser";
     }
     @RequestMapping(value="/createuser", method=RequestMethod.POST)
-    public String getCreateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, HttpServletResponse resp) throws SQLException {
+    public String getCreateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, HttpServletResponse resp) throws SQLException {
         Set<Role> userRole = new HashSet<>();
-        Role r = new Role();
-        r.setRole(role);
-        userRole.add(r);
-        usi.insertUser(name,password,userRole);
+        if(role.equals("admin")) {
+            userRole = Collections.singleton(usi.getRoleById(1));
+        } else if(role.equals("user")) {
+            userRole = Collections.singleton(usi.getRoleById(1));
+        }
+        User u = new User(name,password,userRole);
+        usi.saveUser(u);
         return "redirect:/admin";
     }
 
@@ -93,40 +92,31 @@ public class StartController {
 
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.GET)
-    public String getUpdateuserPagePost() {
-        Set<Role> roleSet = null;
+    public String getUpdateuserPagePost(Model model, @RequestParam(value="user_id") String user_id) {
+        int id;
+        String role = null;
         try {
-            roleSet = Collections.singleton((usi.getDao()).getRoleById(1));
-        } catch (Throwable throwable) {
-            System.out.println("ERROR::StartController_getUpdateuserPagePost_rolesSet=::Collections.singleton(((JpaUserDaoImpl)usi.getDao()).getRoleById(1L))::"+throwable.toString());
+            id = Integer.parseInt(user_id);
+            User us = usi.get(id);
+            role = ((Role)(us.getRoles().toArray()[0])).getRole();
+            model.addAttribute("us",us);
+        } catch(Throwable throwable) {
+            System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id);
         }
-        User user = new User();
-        user.setId_user(1);
-        user.setName("Ivan");
-        user.setPassword("333");
-        user.setRoles(roleSet);
-        int y = 0;
-        try {
-            usi.getDao().updateUser(user);
-        } catch (Throwable throwable) {
-            System.out.println("ERROR::StartController_getUpdateuserPagePost_((JpaUserDaoImpl)usi.getDao()).updateUser(user)::;"+throwable.toString());
+
+        List<String[]> rolesList = new ArrayList<String[]>();
+        if(role.equals("admin")) {
+            rolesList.add(new String[]{"admin","user"});
+        } else if(role.equals("user")) {
+            rolesList.add(new String[]{"user","admin"});
         }
-        return "redirect:/admin";
+        model.addAttribute("rolesList",rolesList);
+        return "updateuser";
     }
     @RequestMapping(value="/updateuser", method=RequestMethod.POST)
-    public String getUpdateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="login") String login, @RequestParam(value="id") String id) throws SQLException {
+    public String getUpdateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="id") String id) throws SQLException {
         int idd;
         Set<Role> userRole = new HashSet<>();
-        /*Role r = new Role();
-        r.setRole(role);
-        if(role.equals("user")) {
-            r.setUserRoleId(2);
-        } else if(role.equals("admin")) {
-            r.setUserRoleId(1);
-        }*/
-
-
-        //Role ris = null;
         String hql = "FROM Role WHERE role = :rollle";
         Query q = entityManager.createQuery(hql);
         q.setParameter("rollle", role);
@@ -137,12 +127,13 @@ public class StartController {
         try {
             idd = Integer.parseInt(id);
             int ins = 0;
-            //User u = new User(true,name,password,login,userRole);
-            //u.setId(idd);
-            usi.updateId(idd,userRole,name,login,password);
-            //entityManager.merge(u);
-            ins = 9;
-            //usi.updateId(idd,userRole,name,login,password);
+            User user = new User();
+            user.setId_user(idd);
+            user.setName(name);
+            user.setPassword(password);
+            Set<Role> roleSet = Collections.singleton((usi.getDao()).getRole(role));
+            user.setRoles(roleSet);
+            usi.updateUser(user);
             return "redirect:/admin";
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(req.getParameter(\"idd\"))::"+throwable.toString());
@@ -151,39 +142,9 @@ public class StartController {
     }
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
-    public String getUpdateuserPageGet() {
-        return "login";
-    }
-    /*@RequestMapping(value={"/", "/login"}, method=RequestMethod.POST)
-    public String getUpdateuserPagePost(Model model, @RequestParam(value="login") String login, @RequestParam(value="password") String password, HttpServletResponse resp) throws SQLException {
-        try {
-            User us = usi.getUser(login);
-            if(us.getPassword().equals(password)) {
-                if(((Role)(us.getAuthorities().toArray()[0])).getRole().equals("admin")) {
-                    //model.addAttribute("autorization", "true");
-                    //model.addAttribute("role", "admin");//rights = true;
-                    return "redirect:/admin";
-                } else {
-                    return "redirect:/user";
-                }
-            }
-        } catch (Throwable throwable) {
-            System.out.println("ERROR::Start_doPost()::"+throwable.toString());
-        }
-        return "login";
-    }*/
-
-
-
-
-
-    // for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public ModelAndView accesssDenied() {
-
         ModelAndView model = new ModelAndView();
-
-        // check if user is login
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {

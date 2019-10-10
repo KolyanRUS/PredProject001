@@ -25,9 +25,6 @@
         <p><small>Name</small>
             <input type="text" name="name" value="" size="5" />
         </p>
-        <p><small>Login</small>
-            <input type="text" name="login" value="" size="5" />
-        </p>
         <p><small>Password</small>
             <input type="text" name="password" value="" size="5" />
         </p>

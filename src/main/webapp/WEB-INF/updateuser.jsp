@@ -18,14 +18,11 @@
                 </select>
             </c:forEach></p>
         <p><small>Id</small>
-            <small>${us.getId()}</small>
-            <input type="hidden" name="id" value="${us.getId()}"/>
+            <small>${us.getId_user()}</small>
+            <input type="hidden" name="id" value="${us.getId_user()}"/>
         </p><%----%>
         <p><small>Name</small>
             <input type="text" name="name" value="${us.getUsername()}" size="5" />
-        </p>
-        <p><small>Login</small>
-            <input type="text" name="login" value="${us.getLogin()}" size="5" />
         </p>
         <p><small>Password</small>
             <input type="text" name="password" value="${us.getPassword()}" size="5" />

@@ -10,8 +10,8 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_role", nullable = false, unique = true)
-    private long id_role;
+    @Column(name = "id", nullable = false, unique = true)
+    private long id;
     @Column(length = 45, nullable = false)
     private String role;
     /*@ManyToMany(mappedBy = "roles")
@@ -21,7 +21,7 @@ public class Role implements GrantedAuthority {
      * @return the userRoleId
      */
     public long getUserRoleId() {
-        return id_role;
+        return id;
     }
 
     /**
@@ -29,7 +29,7 @@ public class Role implements GrantedAuthority {
      *            the userRoleId to set
      */
     public void setUserRoleId(Integer userRoleId) {
-        this.id_role = userRoleId;
+        this.id = userRoleId;
     }
 
     /**

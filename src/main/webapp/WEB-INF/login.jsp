@@ -6,15 +6,6 @@
 </head>
 <body>
 <div>
-    <%--<form action="/login" class="">
-        <p><small>Login</small>
-            <input type="text" name="login" value="" size="5" />
-        </p>
-        <p><small>Password</small>
-            <input type="text" name="password" value="" size="5" />
-        </p>
-        <input type="submit" name="ButtonName" value="log in"/>
-    </form>--%>
         <form method="post" action="/login" class="form-signin">
             <h2 class="form-heading">Log in</h2>
             <div class="form-group">

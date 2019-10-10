@@ -20,11 +20,9 @@ public interface UserDAO {
 
     void deleteId(long id) throws SQLException;
 
-    void updateId(int id, String role, String name, String login, String password) throws SQLException;
-
-    void updateId(int id, Set<Role> userRole, String name, String login, String password) throws SQLException;
-
     void insertUser(String name, String password, Set<Role> roles) throws SQLException;
+
+    void saveUser(User user) throws SQLException;
 
     long getUserId(String login) throws SQLException;
 
@@ -34,9 +32,13 @@ public interface UserDAO {
 
     Role getRoleById(long id) throws SQLException;
 
+    Role getRole(String role) throws SQLException;
+
     void updateUser(User user) throws SQLException;
 
     //User getUserByName(String name) throws SQLException;
 
     User get(long id) throws SQLException;
+
+    void saveRole(Role role) throws SQLException;
 }

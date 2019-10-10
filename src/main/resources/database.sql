@@ -1,22 +1,22 @@
 CREATE TABLE IF NOT EXISTS users (
-                                   id_user BIGINT AUTO_INCREMENT,
+                                   id BIGINT AUTO_INCREMENT,
                                    login VARCHAR(255),
                                    name VARCHAR(255),
                                    password VARCHAR(255),
-                                   PRIMARY KEY (id_user)
+                                   PRIMARY KEY (id)
 ) ENGINE InnoDB;
 
 CREATE TABLE IF NOT EXISTS roles (
-                                   id_role BIGINT AUTO_INCREMENT,
+                                   id BIGINT AUTO_INCREMENT,
                                    role VARCHAR(255),
-                                   PRIMARY KEY (id_role)
+                                   PRIMARY KEY (id)
 ) ENGINE InnoDB;
 
 CREATE TABLE IF NOT EXISTS user_roles (
                                         user_id BIGINT NOT NULL,
                                         role_id BIGINT NOT NULL,
-                                        FOREIGN KEY (user_id) REFERENCES users(id_user),
-                                        FOREIGN KEY (role_id) REFERENCES roles(id_role),
+                                        FOREIGN KEY (user_id) REFERENCES users(id),
+                                        FOREIGN KEY (role_id) REFERENCES roles(id),
                                         UNIQUE (user_id,role_id)
 ) ENGINE InnoDB;
 
