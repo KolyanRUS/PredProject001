@@ -59,8 +59,15 @@ public class JpaUserDaoImpl implements UserDAO/*, UserRepo */{
         return null;
     }
     public User getUser(String login) throws SQLException {
-        return (User) entityManager.createQuery("FROM User WHERE login = :login")
-                .setParameter("login", login).getSingleResult();
+        //return (User) entityManager.createQuery("FROM User WHERE login = :login")
+                //.setParameter("login", login).getSingleResult();
+        List<User> listUsers = getListUsers();
+        for(User us: listUsers) {
+            if(login.equals(us.getName())) {
+                return us;
+            }
+        }
+        return null;
     }
     public Role getRole(String role) throws SQLException {
         return (Role) entityManager.createQuery("FROM Role WHERE role = :role")

@@ -121,8 +121,6 @@ public class StartController {
         Query q = entityManager.createQuery(hql);
         q.setParameter("rollle", role);
         Role ris = (Role) q.getSingleResult();
-
-
         userRole.add(ris);
         try {
             idd = Integer.parseInt(id);
@@ -142,6 +140,9 @@ public class StartController {
     }
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
+    public String getUpdateuserPageGet() {
+        return "login";
+    }
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public ModelAndView accesssDenied() {
         ModelAndView model = new ModelAndView();
@@ -149,12 +150,9 @@ public class StartController {
                 .getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            System.out.println(userDetail);
-
+            System.out.println("userDetail::::"+userDetail);
             model.addObject("username", userDetail.getUsername());
-
         }
-
         model.setViewName("403");
         return model;
 

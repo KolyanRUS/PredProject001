@@ -13,7 +13,7 @@ public class TestDataInitializer implements InitializingBean {
     @Autowired
     private UserDAO userDAO;
     private void testUpdate() throws SQLException {
-        Set<Role> roleSet = Collections.singleton(userDAO.getRoleById(1L));
+        Set<Role> roleSet = Collections.singleton(userDAO.getRoleById(1));
         User user = new User();
         user.setId_user(1);
         user.setName("upd_Ivan");
