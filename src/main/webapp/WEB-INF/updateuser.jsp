@@ -27,6 +27,7 @@
         <p><small>Password</small>
             <input type="text" name="password" value="${us.getPassword()}" size="5" />
         </p>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="submit" name="ButtonName" value="Update_User"/>
     </form>
 </div>

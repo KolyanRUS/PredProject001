@@ -23,9 +23,9 @@ public class TestDataInitializer implements InitializingBean {
     }
     private void datainit() throws SQLException {
         Role role = new Role();
-        role.setRole("admin");
+        role.setRole("ROLE_ADMIN");
         Role role2 = new Role();
-        role2.setRole("user");
+        role2.setRole("ROLE_USER");
         userDAO.saveRole(role);
         userDAO.saveRole(role2);
         Set<Role> roleSet = Collections.singleton(userDAO.getRoleById(1));

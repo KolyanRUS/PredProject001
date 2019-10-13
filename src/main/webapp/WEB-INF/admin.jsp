@@ -7,6 +7,7 @@
 <body>
 <div>
     <form action="/admin" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="submit" name="ButtonName" value="Delete_All_Users"/>
     </form>
     <table>
@@ -25,6 +26,7 @@
                 <td>
                     <form action="/admin" method="post">
                         <c:set var="userid" scope="application" value="${user.getId_user()}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <input type="submit" name="ButtonName" value="${user.getId_user()}"/>
                     </form>
                 </td>

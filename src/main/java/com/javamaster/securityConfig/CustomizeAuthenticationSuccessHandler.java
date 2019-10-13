@@ -20,7 +20,7 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         response.setStatus(HttpServletResponse.SC_OK);
         boolean admin = false;
         for (GrantedAuthority auth : authentication.getAuthorities()) {
-            if ("admin".equals(auth.getAuthority())){
+            if ("ROLE_ADMIN".equals(auth.getAuthority())){
                 admin = true;
             }
         }

@@ -70,15 +70,16 @@ public class StartController {
 
     @RequestMapping(value="/createuser", method=RequestMethod.GET)
     public String getCreateuserPageGet(Model model) {
+        //rolesList.add(new String[]{usi.getRoleById(1).getRole(),usi.getRoleById(2).getRole()});
         return "createuser";
     }
     @RequestMapping(value="/createuser", method=RequestMethod.POST)
     public String getCreateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, HttpServletResponse resp) throws SQLException {
         Set<Role> userRole = new HashSet<>();
-        if(role.equals("admin")) {
+        if(role.equals(usi.getRoleById(1).getRole())) {
             userRole = Collections.singleton(usi.getRoleById(1));
-        } else if(role.equals("user")) {
-            userRole = Collections.singleton(usi.getRoleById(1));
+        } else if(role.equals(usi.getRoleById(2).getRole())) {
+            userRole = Collections.singleton(usi.getRoleById(2));
         }
         User u = new User(name,password,userRole);
         usi.saveUser(u);
@@ -92,7 +93,7 @@ public class StartController {
 
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.GET)
-    public String getUpdateuserPagePost(Model model, @RequestParam(value="user_id") String user_id) {
+    public String getUpdateuserPagePost(Model model, @RequestParam(value="user_id") String user_id) throws SQLException {
         int id;
         String role = null;
         try {
@@ -105,10 +106,10 @@ public class StartController {
         }
 
         List<String[]> rolesList = new ArrayList<String[]>();
-        if(role.equals("admin")) {
-            rolesList.add(new String[]{"admin","user"});
-        } else if(role.equals("user")) {
-            rolesList.add(new String[]{"user","admin"});
+        if(role.equals(usi.getRoleById(1).getRole())) {
+            rolesList.add(new String[]{usi.getRoleById(1).getRole(),usi.getRoleById(2).getRole()});
+        } else if(role.equals(usi.getRoleById(2).getRole())) {
+            rolesList.add(new String[]{usi.getRoleById(2).getRole(),usi.getRoleById(1).getRole()});
         }
         model.addAttribute("rolesList",rolesList);
         return "updateuser";

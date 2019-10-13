@@ -36,12 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()//проверяем на предмет авторизации перед переходом
                 //.antMatchers("/admin","/createuser","/updateuser")
                 //.access("hasRole('admin')");
-                    .antMatchers("/admin")
-                    .hasRole("admin")
+                    .antMatchers("/admin/**")
+                    .hasRole("ADMIN")
                     .antMatchers("/createuser")
-                    .hasRole("admin")
+                    .hasRole("ADMIN")
                     .antMatchers("/updateuser")
-                    .hasRole("admin")
+                    .hasRole("ADMIN")
                 .and().formLogin()//настройка входа
                     .loginPage("/login").successHandler(customizeAuthenticationSuccessHandler)/*.failureUrl("/start?error")*/
                 .usernameParameter("login").passwordParameter("password")
