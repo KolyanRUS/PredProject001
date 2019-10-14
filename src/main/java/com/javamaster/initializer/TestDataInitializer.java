@@ -1,5 +1,7 @@
-package com.javamaster.model;
+package com.javamaster.initializer;
 import com.javamaster.dao.UserDAO;
+import com.javamaster.model.Role;
+import com.javamaster.model.User;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

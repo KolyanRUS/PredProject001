@@ -1,6 +1,5 @@
 package com.javamaster.controller;
 
-import com.javamaster.dao.JpaUserDaoImpl;
 import com.javamaster.model.User;
 import com.javamaster.model.Role;
 import com.javamaster.service.UserServiceImple;
@@ -33,7 +32,7 @@ public class StartController {
 
 
     @RequestMapping(value="/user", method=RequestMethod.GET)
-    public String getAdminPagePost() throws SQLException {
+    public String getAdminPagePost() {
         return "user";
     }
 
@@ -42,7 +41,6 @@ public class StartController {
     @RequestMapping(value="/admin", method=RequestMethod.GET)
     public String getAdminPageGet(Model model) throws SQLException {
         List<User> userList = usi.getListUsers();
-        userList = usi.getListUsers();
         model.addAttribute("users", userList);
         return "admin";
     }
@@ -70,7 +68,6 @@ public class StartController {
 
     @RequestMapping(value="/createuser", method=RequestMethod.GET)
     public String getCreateuserPageGet(Model model) {
-        //rolesList.add(new String[]{usi.getRoleById(1).getRole(),usi.getRoleById(2).getRole()});
         return "createuser";
     }
     @RequestMapping(value="/createuser", method=RequestMethod.POST)
@@ -104,28 +101,25 @@ public class StartController {
         } catch(Throwable throwable) {
             System.out.println("ERROR::id = Integer.parseInt(user_id)::"+throwable.toString()+"::::user_id::"+user_id);
         }
-
-        List<String[]> rolesList = new ArrayList<String[]>();
+        String[] rolesArray = new String[2];
         if(role.equals(usi.getRoleById(1).getRole())) {
-            rolesList.add(new String[]{usi.getRoleById(1).getRole(),usi.getRoleById(2).getRole()});
+            rolesArray[0] = usi.getRoleById(1).getRole();
+            rolesArray[1] = usi.getRoleById(2).getRole();
         } else if(role.equals(usi.getRoleById(2).getRole())) {
-            rolesList.add(new String[]{usi.getRoleById(2).getRole(),usi.getRoleById(1).getRole()});
+            rolesArray[0] = usi.getRoleById(2).getRole();
+            rolesArray[1] = usi.getRoleById(1).getRole();
         }
-        model.addAttribute("rolesList",rolesList);
+        model.addAttribute("rolesArray",rolesArray);
         return "updateuser";
     }
     @RequestMapping(value="/updateuser", method=RequestMethod.POST)
     public String getUpdateuserPagePost(Model model, @RequestParam(value="role") String role, @RequestParam(value="name") String name, @RequestParam(value="password") String password, @RequestParam(value="id") String id) throws SQLException {
         int idd;
         Set<Role> userRole = new HashSet<>();
-        String hql = "FROM Role WHERE role = :rollle";
-        Query q = entityManager.createQuery(hql);
-        q.setParameter("rollle", role);
-        Role ris = (Role) q.getSingleResult();
+        Role ris = usi.getRole(role);
         userRole.add(ris);
         try {
             idd = Integer.parseInt(id);
-            int ins = 0;
             User user = new User();
             user.setId_user(idd);
             user.setName(name);

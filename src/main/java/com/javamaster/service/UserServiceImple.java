@@ -42,6 +42,9 @@ public class UserServiceImple implements UserService {
     public Role getRoleById(long id) throws  SQLException {
         return dao.getRoleById(id);
     }
+    public Role getRole(String role) throws  SQLException {
+        return dao.getRole(role);
+    }
     public User get(long id) throws SQLException {
         return dao.get(id);
     }

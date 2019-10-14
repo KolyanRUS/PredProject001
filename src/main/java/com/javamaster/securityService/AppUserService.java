@@ -1,4 +1,4 @@
-package com.javamaster.service;
+package com.javamaster.securityService;
 import com.javamaster.dao.UserDAO;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

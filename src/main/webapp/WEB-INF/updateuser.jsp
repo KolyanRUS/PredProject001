@@ -11,12 +11,10 @@
 <div>
     <form action="/updateuser" method="post">
         <p><small>Role selection</small>
-            <c:forEach var="rolle" items="${rolesList}">
-                <select name="role">
-                    <option selected="selected" value="${rolle[0]}">${rolle[0]}</option>
-                    <option value="${rolle[1]}">${rolle[1]}</option>
-                </select>
-            </c:forEach></p>
+            <select name="role">
+                <option selected="selected" value="${rolesArray[0]}">${rolesArray[0]}</option>
+                <option value="${rolesArray[1]}">${rolesArray[1]}</option>
+            </select></p>
         <p><small>Id</small>
             <small>${us.getId_user()}</small>
             <input type="hidden" name="id" value="${us.getId_user()}"/>
