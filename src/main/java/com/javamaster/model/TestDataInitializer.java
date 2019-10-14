@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 @Component
 public class TestDataInitializer implements InitializingBean {
@@ -28,16 +27,17 @@ public class TestDataInitializer implements InitializingBean {
         role2.setRole("ROLE_USER");
         userDAO.saveRole(role);
         userDAO.saveRole(role2);
+
+
         Set<Role> roleSet = Collections.singleton(userDAO.getRoleById(1));
         User user = new User();
-        user.setRoles(new HashSet<Role>());
         user.setName("Ivan");
         user.setRoles(roleSet);
         user.setPassword("123");
         userDAO.insertUser(user.getName(),user.getPassword(),user.getRoles());
+
         Set<Role> roleSet2 = Collections.singleton(userDAO.getRoleById(2));
         User user2 = new User();
-        user2.setRoles(new HashSet<Role>());
         user2.setName("Vovan");
         user2.setRoles(roleSet2);
         user2.setPassword("9011");

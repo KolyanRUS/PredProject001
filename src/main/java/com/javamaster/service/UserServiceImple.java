@@ -10,15 +10,6 @@ import java.util.Set;
 
 @Service("userService")
 public class UserServiceImple implements UserService {
-    /*static {
-        JpaUserDaoImpl jpaDao = new JpaUserDaoImpl();
-        try {
-            jpaDao.insertUser(false,"admin","admin","admin","admin");
-            jpaDao.insertUser(false,"user","user","user","user");
-        } catch (Throwable throwable) {
-            System.out.println("|||ERROR|||::::::"+throwable.toString());
-        }
-    }*/
     private UserDAO dao;
     @Autowired
     public UserServiceImple(UserDAO dao) {
@@ -51,9 +42,6 @@ public class UserServiceImple implements UserService {
     public Role getRoleById(long id) throws  SQLException {
         return dao.getRoleById(id);
     }
-    /*public User getUserByName(String name) throws  SQLException {
-        return dao.getUser(name);
-    }*/
     public User get(long id) throws SQLException {
         return dao.get(id);
     }

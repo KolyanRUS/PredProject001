@@ -1,5 +1,4 @@
 package com.javamaster.service;
-import com.javamaster.dao.JpaUserDaoImpl;
 import com.javamaster.dao.UserDAO;
 import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.sql.SQLException;
 
 @Service("userDetailsService")
 public class AppUserService implements UserDetailsService {

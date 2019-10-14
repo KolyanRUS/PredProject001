@@ -36,8 +36,6 @@ public interface UserDAO {
 
     void updateUser(User user) throws SQLException;
 
-    //User getUserByName(String name) throws SQLException;
-
     User get(long id) throws SQLException;
 
     void saveRole(Role role) throws SQLException;

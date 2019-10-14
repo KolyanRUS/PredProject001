@@ -2,8 +2,6 @@ package com.javamaster.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.persistence.EntityManager;
-
 public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override

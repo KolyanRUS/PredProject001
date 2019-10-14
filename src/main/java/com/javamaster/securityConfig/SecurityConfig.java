@@ -3,19 +3,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;//отключить
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 @Configuration
 @ComponentScan("com.javamaster.*")
 @EnableWebSecurity
@@ -33,21 +25,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()//проверяем на предмет авторизации перед переходом
-                //.antMatchers("/admin","/createuser","/updateuser")
-                //.access("hasRole('admin')");
+                .authorizeRequests()
                     .antMatchers("/admin/**")
                     .hasRole("ADMIN")
                     .antMatchers("/createuser")
                     .hasRole("ADMIN")
                     .antMatchers("/updateuser")
                     .hasRole("ADMIN")
+                .antMatchers("/user")
+                .hasAnyRole("ADMIN","USER")
                 .and().formLogin()//настройка входа
-                    .loginPage("/login").successHandler(customizeAuthenticationSuccessHandler)/*.failureUrl("/start?error")*/
+                    .loginPage("/login").successHandler(customizeAuthenticationSuccessHandler)
                 .usernameParameter("login").passwordParameter("password")
-                .and().logout().permitAll()//logoutSuccessUrl("/login?logout").and().csrf()
-                .and().exceptionHandling().accessDeniedPage("/403")
-                //intercepted urls
-                ;
+                .and().logout().permitAll()
+                .and().exceptionHandling().accessDeniedPage("/403");
     }
 }
